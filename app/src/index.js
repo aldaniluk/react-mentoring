@@ -1,3 +1,4 @@
+import "./styles/reset.css";
 import './styles/style.css';
 import './styles/style.less';
 import './styles/style.scss';
