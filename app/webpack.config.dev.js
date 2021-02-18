@@ -6,10 +6,6 @@ module.exports = {
     output: {
         filename: '[name].bundle.js'
     },
-    devServer: {
-        contentBase: path.join(__dirname, 'dist'),
-        port: 4200
-    },
     devtool: 'source-map',
     target: 'web',
     plugins: [
