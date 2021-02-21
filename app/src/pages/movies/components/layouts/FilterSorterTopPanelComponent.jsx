@@ -5,6 +5,7 @@ const Container = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: baseline;
+    border-bottom: 3px solid #808080;
 `
 
 function FilterSorterTopPanelComponent(props) {

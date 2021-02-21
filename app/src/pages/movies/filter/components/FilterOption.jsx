@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const Option = styled.div`
     padding: 10px 0;
-    margin: 0 10px;
+    margin: 0 10px -3px;
     cursor: pointer;
     border-bottom: ${props => props.choosed ? '3px solid #f65261' : 'none'};
     &:nth-child(1) {
