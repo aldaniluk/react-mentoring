@@ -1,4 +1,3 @@
-import React from 'react';
 import { Movie } from './components/Movie';
 import { Filter } from './filter/Filter';
 import { Sorter } from './sorter/Sorter';

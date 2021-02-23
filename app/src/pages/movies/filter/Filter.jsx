@@ -1,8 +1,7 @@
-import React from 'react';
 import { FilterListComponent } from './components/layouts/FilterListComponent';
 import { FilterOption } from './components/FilterOption';
 
-let options = [
+const options = [
     'ALL', 'DOCUMENTARY', 'COMEDY', 'HORROR', 'CRIME'
 ]
 

@@ -1,7 +1,6 @@
-import React from 'react';
 import { HeaderComponent } from './components/layouts/HeaderComponent';
 import { TopPanelComponent } from './components/layouts/TopPanelComponent';
-import { Logo } from '../components/Logo';
+import { Logo } from '@globalComponents/Logo';
 import { AddMovieButton } from './components/AddMovieButton';
 import { SearchPanelComponent } from './components/layouts/SearchPanelComponent';
 import { SearchText } from './components/SearchText';

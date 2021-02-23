@@ -1,4 +1,3 @@
-import React from 'react';
 import { SorterListComponent } from './components/layouts/SorterListComponent';
 import { SortByText } from './components/SortByText';
 import { SorterOption } from './components/SorterOption';
@@ -8,7 +7,7 @@ const options = [
 ]
 
 // TBD
-const choosedOption = options[0];
+let choosedOption = options[0];
 
 function Sorter() {
     return (

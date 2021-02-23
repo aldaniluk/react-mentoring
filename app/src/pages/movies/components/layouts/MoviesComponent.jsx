@@ -1,5 +1,4 @@
-import React from 'react';
-import { GlobalWidthComponent } from '../../../components/GlobalWidthComponent';
+import { GlobalWidthComponent } from '@globalComponents/GlobalWidthComponent';
 import styled from 'styled-components';
 
 const Container = styled.div`

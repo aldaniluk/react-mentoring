@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 
 const Button = styled.button`
@@ -9,10 +8,14 @@ const Button = styled.button`
     padding: 10px 15px;
 `
 
+const BoldText = styled.span`
+    font-weight: bold;
+`
+
 function AddMovieButton(){
     return (
         <Button>
-            <strong>+ ADD MOVIE</strong>
+            <BoldText>+ ADD MOVIE</BoldText>
         </Button>
     );
 }

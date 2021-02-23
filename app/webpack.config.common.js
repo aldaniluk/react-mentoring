@@ -31,7 +31,10 @@ module.exports = {
         modules: ['node_modules'],
         extensions: [
             '.js', '.jsx', '.json'
-        ]
+        ],
+        alias: {
+            '@globalComponents': path.resolve(__dirname, './src/pages/components/')
+        }
     },
     optimization: {
         splitChunks: {
