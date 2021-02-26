@@ -1,0 +1,11 @@
+h1 {
+    text-align: center;
+}
+
+.img {
+    background-image: url('../assets/cat.jpg');
+    background-size: cover;
+    height: 300px;
+    width: 500px;
+    margin: 0 auto;
+}

@@ -1,0 +1,53 @@
+{
+  "name": "app",
+  "homepage": "http://aldaniluk.github.io/react-mentoring",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:dev": "cross-env NODE_ENV=development webpack",
+    "build:prod": "cross-env NODE_ENV=production webpack",
+    "serve": "cross-env NODE_ENV=development webpack serve",
+    "test": "jest",
+    "deploy": "gh-pages -d dist"
+  },
+  "author": "Aliaksandra Daniliuk",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.12.16",
+    "@babel/preset-env": "^7.12.16",
+    "@babel/preset-react": "^7.12.13",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.2.2",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^7.0.0",
+    "core-js": "^3.9.0",
+    "cross-env": "^7.0.3",
+    "css-loader": "^5.0.2",
+    "css-minimizer-webpack-plugin": "^1.2.0",
+    "eslint": "^7.20.0",
+    "eslint-loader": "^4.0.2",
+    "file-loader": "^6.2.0",
+    "gh-pages": "^3.1.0",
+    "html-loader": "^1.3.2",
+    "html-webpack-plugin": "^5.1.0",
+    "jest-webpack": "^0.5.1",
+    "less": "^4.1.1",
+    "less-loader": "^8.0.0",
+    "mini-css-extract-plugin": "^1.3.6",
+    "node-sass": "^5.0.0",
+    "sass-loader": "^11.0.1",
+    "style-loader": "^2.0.0",
+    "webpack": "^5.21.2",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2",
+    "webpack-merge": "^5.7.3"
+  },
+  "dependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-redux": "^7.2.2",
+    "react-router": "^5.2.0",
+    "redux": "^4.0.5"
+  }
+}
