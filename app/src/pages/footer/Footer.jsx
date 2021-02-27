@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Logo } from '@globalComponents/Logo';
+import { Logo } from '@globalComponents';
 
 const Container = styled.div`
     background-color: #424242;

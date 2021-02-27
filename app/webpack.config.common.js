@@ -33,7 +33,9 @@ module.exports = {
             '.js', '.jsx', '.json'
         ],
         alias: {
-            '@globalComponents': path.resolve(__dirname, './src/pages/components/')
+            '@globalComponents': path.resolve(__dirname, './src/pages/components/'),
+            '@pages': path.resolve(__dirname, './src/pages/'),
+            '@assets': path.resolve(__dirname, './src/assets/')
         }
     },
     optimization: {

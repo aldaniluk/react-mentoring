@@ -5,7 +5,7 @@ const Option = styled.div`
     padding: 10px 0;
     margin: 0 10px -3px;
     cursor: pointer;
-    border-bottom: ${props => props.choosed ? '3px solid #f65261' : 'none'};
+    border-bottom: ${props => props.selected ? '3px solid #f65261' : 'none'};
     &:nth-child(1) {
         margin-left: 0;
     }
@@ -13,14 +13,14 @@ const Option = styled.div`
 
 function FilterOption(props) {
     return (
-        <Option choosed={props.choosed}>
+        <Option selected={props.selected}>
             {props.option}
         </Option>
     );
 }
 
 FilterOption.propTypes = {
-    choosed: PropTypes.bool.isRequired,
+    selected: PropTypes.bool.isRequired,
     option: PropTypes.string.isRequired
 }
 

@@ -1,11 +1,11 @@
-import { HeaderComponent } from './components/layouts/HeaderComponent';
-import { TopPanelComponent } from './components/layouts/TopPanelComponent';
-import { Logo } from '@globalComponents/Logo';
-import { AddMovieButton } from './components/AddMovieButton';
-import { SearchPanelComponent } from './components/layouts/SearchPanelComponent';
-import { SearchText } from './components/SearchText';
-import { SearchInput } from './components/SearchInput';
-import { SearchButton } from './components/SearchButton';
+import { HeaderComponent } from '@pages/header/components/layouts/HeaderComponent';
+import { TopPanelComponent } from '@pages/header/components/layouts/TopPanelComponent';
+import { Logo } from '@globalComponents';
+import { AddMovieButton } from '@pages/header/components/AddMovieButton';
+import { SearchPanelComponent } from '@pages/header/components/layouts/SearchPanelComponent';
+import { SearchText } from '@pages/header/components/SearchText';
+import { SearchInput } from '@pages/header/components/SearchInput';
+import { SearchButton } from '@pages/header/components/SearchButton';
 
 function Header() {
     return (

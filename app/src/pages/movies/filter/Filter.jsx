@@ -1,12 +1,12 @@
-import { FilterListComponent } from './components/layouts/FilterListComponent';
-import { FilterOption } from './components/FilterOption';
+import { FilterListComponent } from '@pages/movies/filter/components/layouts/FilterListComponent';
+import { FilterOption } from '@pages/movies/filter/components/FilterOption';
 
 const options = [
     'ALL', 'DOCUMENTARY', 'COMEDY', 'HORROR', 'CRIME'
 ]
 
 // TBD
-let choosed = option => option == options[0];
+let selected = option => option == options[0];
 
 function Filter() {    
     return (
@@ -16,7 +16,7 @@ function Filter() {
                     <FilterOption 
                         key={option}
                         option={option}
-                        choosed={choosed(option)} />
+                        selected={selected(option)} />
                 ))
             }
         </FilterListComponent>

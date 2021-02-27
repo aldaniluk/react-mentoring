@@ -1,7 +1,7 @@
-import { Header } from './header/Header';
-import { Movies } from './movies/Movies';
-import { Footer } from './footer/Footer';
-import { ErrorBoundary } from '@globalComponents/ErrorBoundary';
+import { Header } from './header';
+import { Movies } from './movies';
+import { Footer } from './footer';
+import { ErrorBoundary } from '@globalComponents';
 
 function App(){
     return (

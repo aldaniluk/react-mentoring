@@ -2,17 +2,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const Card = styled.div`
-    padding: 30px 20px;
-    flex-basis: 33.33%;
     color: #808080;
-    &:nth-child(3n+3) {
-        padding-right: 0px;
-        padding-left: 40px;
-    }
-    &:nth-child(3n+1) {
-        padding-right: 40px;
-        padding-left: 0px;
-    }
 `
 
 const Image = styled.img`

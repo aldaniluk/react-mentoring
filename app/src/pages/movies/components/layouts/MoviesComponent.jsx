@@ -1,4 +1,4 @@
-import { GlobalWidthComponent } from '@globalComponents/GlobalWidthComponent';
+import { GlobalWidthComponent } from '@globalComponents';
 import styled from 'styled-components';
 
 const Container = styled.div`
