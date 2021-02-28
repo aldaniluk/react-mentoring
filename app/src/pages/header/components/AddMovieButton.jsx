@@ -12,9 +12,9 @@ const BoldText = styled.span`
     font-weight: bold;
 `
 
-function AddMovieButton(){
+function AddMovieButton(props){
     return (
-        <Button>
+        <Button onClick={props.openAddMovieForm}>
             <BoldText>+ ADD MOVIE</BoldText>
         </Button>
     );

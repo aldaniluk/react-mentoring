@@ -1,6 +1,6 @@
 import { GlobalWidthComponent } from '@globalComponents';
 import styled from 'styled-components';
-import img from '@assets/movies.png';
+import img from '@assets/imgs/movies.png';
 
 const Container = styled.div`
     padding: 30px 0px;
