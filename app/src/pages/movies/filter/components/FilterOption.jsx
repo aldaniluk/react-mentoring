@@ -13,14 +13,14 @@ const Option = styled.div`
 
 function FilterOption(props) {
     return (
-        <Option selected={props.selected}>
+        <Option selected={props.selectedOption == props.option} onClick={props.changeSelected}>
             {props.option}
         </Option>
     );
 }
 
 FilterOption.propTypes = {
-    selected: PropTypes.bool.isRequired,
+    selectedOption: PropTypes.string.isRequired,
     option: PropTypes.string.isRequired
 }
 

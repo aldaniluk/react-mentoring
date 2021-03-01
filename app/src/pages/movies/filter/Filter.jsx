@@ -1,26 +1,35 @@
 import { FilterListComponent } from '@pages/movies/filter/components/layouts/FilterListComponent';
 import { FilterOption } from '@pages/movies/filter/components/FilterOption';
+import options from '@assets/data/genres.json'
+import React from 'react';
 
-const options = [
-    'ALL', 'DOCUMENTARY', 'COMEDY', 'HORROR', 'CRIME'
-]
+class Filter extends React.Component {    
+    state = {
+        selectedOption: options[0]
+    };
 
-// TBD
-let selected = option => option == options[0];
+    changeSelected = option => {
+        this.setState({
+            selectedOption: option
+        });
+    }
 
-function Filter() {    
-    return (
-        <FilterListComponent>
-            {
-                options.map(option => (
-                    <FilterOption 
-                        key={option}
-                        option={option}
-                        selected={selected(option)} />
-                ))
-            }
-        </FilterListComponent>
-    );
+    render(){
+        return (
+            <FilterListComponent>
+                {
+                    options.map(option => (
+                        <FilterOption 
+                            key={option.id}
+                            option={option.name}
+                            selectedOption={this.state.selectedOption.name}
+                            changeSelected={this.changeSelected.bind(this, option)}
+                        />
+                    ))
+                }
+            </FilterListComponent>
+        );
+    }
 }
 
 export { Filter }

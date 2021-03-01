@@ -10,9 +10,9 @@ const Options = styled.div`
 const Option = styled.button`
     padding: 5px;
     margin: 5px;
-    background: transparent;
-    color: #f65261;
-    border: 1px solid #f65261;
+    background: #f65261;
+    color: white;
+    border: none;
     border-radius: 5px;
     :hover {
         background: #f65261;
