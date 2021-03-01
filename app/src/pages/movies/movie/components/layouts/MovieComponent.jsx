@@ -8,7 +8,7 @@ const Card = styled.div`
 
 function MovieComponent(props) {
     return (
-        <Card onMouseOver={props.showEditDelete} onMouseOut={props.hideEditDelete}>
+        <Card onMouseOver={props.showEditDelete} onMouseLeave={props.hideEditDelete}>
             {props.children}
         </Card>
     );

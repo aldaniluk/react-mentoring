@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const Options = styled.div`
-    display: ${props => props.show ? 'inline' : 'none'};
     position: absolute;
     right: 5px;
     top: 5px;
@@ -23,6 +22,10 @@ const Option = styled.button`
 
 // temporarily instead of 3 dots icon
 function EditDeleteOptions(props) {
+    if(!props.show){
+        return null;
+    }
+
     return (
         <Options show={props.show}>
             <Option onClick={props.openEditMovie}>Edit</Option>
