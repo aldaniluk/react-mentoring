@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { FormComponent } from '@globalComponents/FormComponent'
+import { FormComponent, ColoredButton, TransparentButton } from '@globalComponents'
+import { VARIABLES } from '@styles/VARIABLES'
 
 const TitleText = styled.div`
     color: white;
@@ -14,27 +15,10 @@ const Text = styled.div`
 
 const ButtonContainer = styled.div`
     margin-top: 40px;
-    display: flex;
-    justify-content: flex-end;
-`
-
-const ResetButton = styled.button`
-    border: 2px solid #f65261;
-    border-radius: 5px;
-    color: #f65261;
-    background: none; 
-    width: 150px;
-    height: 40px;
-`
-
-const ComfirmButton = styled.button`
-    border: none;
-    border-radius: 5px;
-    color: white;
-    background: #f65261; 
-    width: 150px;
-    height: 40px;
-    margin-left: 10px;
+    text-align: right;
+    * {
+        margin-left: 10px;
+    }
 `
 
 function DeleteMovieForm(props) {    
@@ -47,8 +31,8 @@ function DeleteMovieForm(props) {
             <TitleText>DELETE MOVIE</TitleText>
             <Text>Are you sure you want to delete this movie?</Text>
             <ButtonContainer>
-                <ResetButton onClick={props.close}>RESET</ResetButton>
-                <ComfirmButton>Confirm</ComfirmButton>
+                <TransparentButton onClick={props.close}>RESET</TransparentButton>
+                <ColoredButton>Confirm</ColoredButton>
             </ButtonContainer>
         </FormComponent>
     )

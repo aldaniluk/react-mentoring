@@ -1,7 +1,8 @@
 import styled from 'styled-components';
+import { VARIABLES } from '@styles/VARIABLES'
 
 const LogoText = styled.p`
-    color: #f65261;
+    color: ${VARIABLES.red};
 `
 
 const BoldText = styled.span`

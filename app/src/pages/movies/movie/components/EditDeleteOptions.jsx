@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { VARIABLES } from '@styles/VARIABLES'
 
 const Options = styled.div`
     position: absolute;
@@ -10,14 +11,10 @@ const Options = styled.div`
 const Option = styled.button`
     padding: 5px;
     margin: 5px;
-    background: #f65261;
+    background: ${VARIABLES.red};
     color: white;
     border: none;
     border-radius: 5px;
-    :hover {
-        background: #f65261;
-        color: white;
-    }
 `
 
 // temporarily instead of 3 dots icon

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { VARIABLES } from '@styles/VARIABLES'
 
 const NameAgeComponent = styled.div`
     padding: 5px 0;
@@ -13,7 +14,7 @@ const Name = styled.p`
 `
 
 const Age = styled.div`
-    border: 1px solid #808080;
+    border: 1px solid ${VARIABLES.lightgrey};
     border-radius: 3px;
     padding: 3px 5px;
 `

@@ -13,26 +13,22 @@ class Header extends React.Component {
         addMovieFormOpened: false
     }
 
-    openAddMovieForm = () => {
-        this.setState({
-            addMovieFormOpened: true
-        });
-    }
-
-    closeAddMovieForm = () => {
-        this.setState({
-            addMovieFormOpened: false
+    openCloseAddMovieForm = () => {
+        this.setState((state, props) => {
+            return {
+                addMovieFormOpened: !state.addMovieFormOpened
+            }
         });
     }
 
     render() {
         return (
             <>
-                <AddMovieForm opened={this.state.addMovieFormOpened} close={this.closeAddMovieForm} />
+                <AddMovieForm opened={this.state.addMovieFormOpened} close={this.openCloseAddMovieForm} />
                 <HeaderComponent>
                     <TopPanelComponent>
                         <Logo />
-                        <AddMovieButton openAddMovieForm={this.openAddMovieForm} />
+                        <AddMovieButton openAddMovieForm={this.openCloseAddMovieForm} />
                     </TopPanelComponent>
                     <SearchPanelComponent>
                         <SearchText />

@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 import arrow from '@assets/imgs/arrow.png'
 import PropTypes from 'prop-types';
+import { VARIABLES } from '@styles/VARIABLES'
 
 const Dropdown = styled.select`
     border: none;
-    background: #232323;
+    background: ${VARIABLES.darkgrey};
     border: none;
     color: white;
     padding: 0 10px;

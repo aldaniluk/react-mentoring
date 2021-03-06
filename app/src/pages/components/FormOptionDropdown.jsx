@@ -1,12 +1,13 @@
 import styled from 'styled-components';
+import { VARIABLES } from '@styles/VARIABLES'
 
 const OptionDropdown = styled.select`
     width: 100%;
     height: 40px;
-    background: #2e2e2e;
+    background: ${VARIABLES.grey};
     border: none;
     border-radius: 5px;
-    color: #5b5b5b;
+    color: ${VARIABLES.lightgrey};
 `
 
 function FormOptionDropdown(props) {

@@ -1,8 +1,9 @@
 import { GlobalWidthComponent } from '@globalComponents';
 import styled from 'styled-components';
+import { VARIABLES } from '@styles/VARIABLES'
 
 const Container = styled.div`
-    background: #232323;
+    background: ${VARIABLES.darkgrey};
     padding: 20px 0;
 `
 

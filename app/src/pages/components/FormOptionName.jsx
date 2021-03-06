@@ -1,8 +1,9 @@
 import styled from 'styled-components';
+import { VARIABLES } from '@styles/VARIABLES'
 
 const OptionName = styled.div`
     margin-top: 20px;
-    color: #f65261;
+    color: ${VARIABLES.red};
 `
 
 function FormOptionName(props) {

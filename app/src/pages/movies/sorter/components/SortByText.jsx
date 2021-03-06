@@ -1,7 +1,8 @@
 import styled from 'styled-components';
+import { VARIABLES } from '@styles/VARIABLES'
 
 const Text = styled.p`
-    color: #808080;
+    color: ${VARIABLES.lightgrey};
 `
 
 function SortByText() {

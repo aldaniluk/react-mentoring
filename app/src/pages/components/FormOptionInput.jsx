@@ -1,8 +1,10 @@
 import styled from 'styled-components';
+import { VARIABLES } from '@styles/VARIABLES'
 
 const OptionInput = styled.input`
     width: 100%;
-    background: #2e2e2e;
+    background: ${VARIABLES.grey};
+    color: ${VARIABLES.lightgrey};
     border: none;
     border-radius: 5px;
     height: 40px;
@@ -10,7 +12,7 @@ const OptionInput = styled.input`
 
 function FormOptionInput(props) {
     return (
-        <OptionInput placeholder={props.placeholder}>
+        <OptionInput placeholder={props.placeholder} value={props.value}>
             {props.children}
         </OptionInput>
     )

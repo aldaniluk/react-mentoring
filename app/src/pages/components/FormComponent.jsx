@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { VARIABLES } from '@styles/VARIABLES'
 
 const Container = styled.div`
     position: fixed;
@@ -16,7 +17,7 @@ const Container = styled.div`
 
 const Form = styled.div`
     width: 40%;
-    background: #232323;
+    background: ${VARIABLES.darkgrey};
     padding: 40px;
 `
 

@@ -7,9 +7,6 @@ const Title = styled.div`
     font-size: 30px;
 `
 
-const OptionDropdownItem = styled.option`
-`
-
 const ButtonContainer = styled.div`
     margin-top: 40px;
     text-align: right;
@@ -36,9 +33,9 @@ function AddMovieForm(props) {
             <FormOptionDropdown>
                 {
                     genres.map(genre => 
-                            <OptionDropdownItem key={genre.id}>
+                            <option key={genre.id}>
                                 {genre.name}
-                            </OptionDropdownItem>
+                            </option>
                         )
                 }
             </FormOptionDropdown>

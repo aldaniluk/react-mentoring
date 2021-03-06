@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { VARIABLES } from '@styles/VARIABLES'
 
 const Card = styled.div`
-    color: #808080;
+    color: ${VARIABLES.lightgrey};
     position: relative;
 `
 

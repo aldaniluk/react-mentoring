@@ -1,10 +1,11 @@
 import styled from 'styled-components';
+import { VARIABLES } from '@styles/VARIABLES'
 
 const Button = styled.button`
     border: none;
     border-radius: 5px;
     color: white;
-    background: #f65261; 
+    background: ${VARIABLES.red}; 
     width: 150px;
     height: 40px;
 `
