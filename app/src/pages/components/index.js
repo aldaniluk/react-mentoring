@@ -7,6 +7,7 @@ import { FormOptionInput } from './FormOptionInput'
 import { FormOptionDropdown } from './FormOptionDropdown'
 import { TransparentButton } from './TransparentButton'
 import { ColoredButton } from './ColoredButton'
+import { SemitransparentButton } from './SemitransparentButton'
 
 export {
     ErrorBoundary,
@@ -18,4 +19,5 @@ export {
     FormOptionDropdown,
     TransparentButton,
     ColoredButton,
+    SemitransparentButton,
 }

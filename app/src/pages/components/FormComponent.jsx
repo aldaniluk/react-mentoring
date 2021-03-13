@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { VARIABLES } from '@styles/VARIABLES'
 
-const Container = styled.div`
+const Container = styled.form`
     position: fixed;
     width: 100%;
     height: 100%;

@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { FormComponent, ColoredButton, TransparentButton } from '@globalComponents'
-import { VARIABLES } from '@styles/VARIABLES'
 
 const TitleText = styled.div`
     color: white;
@@ -22,10 +21,6 @@ const ButtonContainer = styled.div`
 `
 
 function DeleteMovieForm(props) {    
-    if(!props.opened){
-        return null;
-    }
-     
     return (
         <FormComponent>
             <TitleText>DELETE MOVIE</TitleText>
@@ -39,7 +34,6 @@ function DeleteMovieForm(props) {
 }
 
 DeleteMovieForm.propTypes = {
-    opened: PropTypes.bool.isRequired,
     close: PropTypes.func.isRequired,
 }
 

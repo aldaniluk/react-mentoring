@@ -52,18 +52,11 @@ class Movie extends React.Component {
     render() {
         return (
             <>
-                <EditMovieForm 
-                    opened={this.state.editMovieFormOpened} 
-                    close={this.closeEditMovieForm} 
-                    movie={this.props.movie}
-                />
-                <DeleteMovieForm
-                    opened={this.state.deleteMovieFormOpened} 
-                    close={this.closeDeleteMovieForm} 
-                />
+                {this.state.editMovieFormOpened && (<EditMovieForm close={this.closeEditMovieForm} movie={this.props.movie}/>)}
+                {this.state.deleteMovieFormOpened &&  (<DeleteMovieForm close={this.closeDeleteMovieForm} />)}
                 <MovieComponent 
-                    showEditDelete={this.showEditDelete} 
-                    hideEditDelete={this.hideEditDelete}
+                    onMouseOver={this.showEditDelete} 
+                    onMouseLeave={this.hideEditDelete}
                 >
                     <img src={'imgs/'+this.props.movie.imgSrc} />
                     <EditDeleteOptions 
@@ -91,7 +84,7 @@ Movie.propTypes = {
         imgSrc: PropTypes.string.isRequired,
         overview: PropTypes.string.isRequired,
         runtime: PropTypes.string.isRequired,
-    })
+    }).isRequired
 }
 
 export { Movie }

@@ -1,16 +1,8 @@
 import styled from 'styled-components';
 
-const Container = styled.div`
+const FilterListComponent = styled.div`
     display: flex;
     color: white;
 `
-
-function FilterListComponent(props) {
-    return (
-        <Container>
-            {props.children}
-        </Container>
-    )
-}
 
 export { FilterListComponent }

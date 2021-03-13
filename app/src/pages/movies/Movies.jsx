@@ -5,32 +5,41 @@ import { MoviesComponent } from '@pages/movies/components/layouts/MoviesComponen
 import { FilterSorterTopPanelComponent } from '@pages/movies/components/layouts/FilterSorterTopPanelComponent';
 import { MoviesListComponent } from '@pages/movies/components/layouts/MoviesListComponent';
 import { MoviesCounter } from '@pages/movies/components/MoviesCounter';
-import movies from '@assets/data/movies';
+import { GlobalWidthComponent } from '@globalComponents';
+import moviesFromJson from '@assets/data/movies';
 import React from 'react';
 
 class Movies extends React.Component {
     state = {
-        movies: movies
-    };
+        movies: []
+    }
+
+    componentDidMount(){
+        Promise.resolve(moviesFromJson)
+            .then(movies => this.setState({ movies }))
+    }
 
     render() {
         return (
             <MoviesComponent>
-                <FilterSorterTopPanelComponent>
-                    <Filter />
-                    <Sorter />
-                </FilterSorterTopPanelComponent>
-                <MoviesCounter count={this.state.movies.length} />
-                <MoviesListComponent>
-                {
-                    this.state.movies.map(movie => (
-                        <Movie 
-                            key={movie.id}
-                            movie={movie}
-                        />
-                    ))
-                }
-                </MoviesListComponent>
+                <GlobalWidthComponent>
+                    <FilterSorterTopPanelComponent>
+                        <Filter />
+                        <Sorter />
+                    </FilterSorterTopPanelComponent>
+                    <MoviesCounter count={this.state.movies.length} />
+                    <MoviesListComponent>
+                    {
+                        this.state.movies.map(movie => (
+                            <Movie 
+                                key={movie.id}
+                                movie={movie}
+                            />
+                        ))
+                    }
+                    </MoviesListComponent>
+                    
+                </GlobalWidthComponent>
             </MoviesComponent>
         )
     }

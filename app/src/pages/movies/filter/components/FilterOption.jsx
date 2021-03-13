@@ -6,7 +6,7 @@ const Option = styled.div`
     padding: 10px 0;
     margin: 0 10px -3px;
     cursor: pointer;
-    border-bottom: ${props => props.selected ? '3px solid ' + VARIABLES.red : 'none'};
+    border-bottom: ${props => props.isSelected ? '3px solid ' + VARIABLES.red : 'none'};
     &:nth-child(1) {
         margin-left: 0;
     }
@@ -14,15 +14,17 @@ const Option = styled.div`
 
 function FilterOption(props) {
     return (
-        <Option selected={props.selectedOption === props.option} onClick={props.changeSelected}>
-            {props.option}
+        <Option isSelected={props.isSelected} onClick={() => props.changeSelected(props.option)}>
+            {props.option.name}
         </Option>
     );
 }
 
 FilterOption.propTypes = {
-    selectedOption: PropTypes.string.isRequired,
-    option: PropTypes.string.isRequired
+    option: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+    }).isRequired,
+    isSelected: PropTypes.bool.isRequired,
 }
 
 export { FilterOption }

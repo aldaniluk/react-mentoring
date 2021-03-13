@@ -1,12 +1,21 @@
 import { SorterListComponent } from '@pages/movies/sorter/components/layouts/SorterListComponent';
 import { SortByText } from '@pages/movies/sorter/components/SortByText';
 import { SorterDropdown } from './components/SorterDropdown'
-import options from '@assets/data/sortBy.json'
+import optionsFromJson from '@assets/data/sortBy.json'
 import React from 'react';
 
 class Sorter extends React.Component {
     state = {
-        selectedOption: options[0]
+        selectedOption: { name: '' },
+        options: []
+    }
+
+    componentDidMount(){
+        Promise.resolve(optionsFromJson)
+            .then(options => this.setState({
+                options: options,
+                selectedOption: options[0]
+            }))
     }
 
     changeSelected = option => {
@@ -21,12 +30,13 @@ class Sorter extends React.Component {
                 <SortByText /> 
                 <SorterDropdown selectedOption={this.state.selectedOption.name} >
                     {
-                        options.map(option => 
-                            <option key={option.id} 
-                                value={option.name} 
-                                onClick={this.changeSelected}>
-                                    {option.name}
-                            </option>   
+                        this.state.options.map(option => (
+                                <option key={option.id} 
+                                    value={option.name} 
+                                    onClick={this.changeSelected}>
+                                        {option.name}
+                                </option>   
+                            )
                         )
                     }
                 </SorterDropdown>
