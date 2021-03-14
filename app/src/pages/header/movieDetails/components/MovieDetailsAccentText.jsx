@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { VARIABLES } from '@styles/VARIABLES'
+import { VARIABLES } from '@styles/VARIABLES';
 
 const MovieDetailsAccentText = styled.p`
     margin: 20px 30px 20px 0;

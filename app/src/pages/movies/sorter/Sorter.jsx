@@ -2,47 +2,44 @@ import { SorterListComponent } from '@pages/movies/sorter/components/layouts/Sor
 import { SortByText } from '@pages/movies/sorter/components/SortByText';
 import { SorterDropdown } from './components/SorterDropdown'
 import optionsFromJson from '@assets/data/sortBy.json'
-import React from 'react';
+import { useState, useEffect } from 'react';
 
-class Sorter extends React.Component {
-    state = {
-        selectedOption: { name: '' },
-        options: []
+function Sorter(props) {
+    const [options, setOptions] = useState([]);
+    const [selectedOption, setSelectedOption] = useState(null);
+
+    useEffect(() => {
+        Promise
+            .resolve(optionsFromJson)
+            .then(options => {
+                setOptions(options);
+                setSelectedOption(options[0]);
+            });
+    }, []);
+
+    useEffect(() => {
+        props.changeSelectedOption(selectedOption);
+    }, [selectedOption]);
+
+    function changeSelected(event){
+        setSelectedOption(options.find(o => o.id == event.target.value));
     }
 
-    componentDidMount(){
-        Promise.resolve(optionsFromJson)
-            .then(options => this.setState({
-                options: options,
-                selectedOption: options[0]
-            }))
-    }
-
-    changeSelected = option => {
-        this.setState({
-            selectedOption: option
-        });
-    }
-
-    render() {
-        return (
-            <SorterListComponent>
-                <SortByText /> 
-                <SorterDropdown selectedOption={this.state.selectedOption.name} >
-                    {
-                        this.state.options.map(option => (
-                                <option key={option.id} 
-                                    value={option.name} 
-                                    onClick={this.changeSelected}>
-                                        {option.name}
-                                </option>   
-                            )
+    return (
+        <SorterListComponent>
+            <SortByText /> 
+            <SorterDropdown selectedOption={selectedOption} changeSelected={changeSelected} >
+                {
+                    options.map(option => (
+                            <option key={option.id} value={option.id}>
+                                {option.name}
+                            </option>   
                         )
-                    }
-                </SorterDropdown>
-            </SorterListComponent>
-        );
-    }
+                    )
+                }
+            </SorterDropdown>
+        </SorterListComponent>
+    );
 }
 
 export { Sorter }

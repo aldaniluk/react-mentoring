@@ -1,45 +1,39 @@
 import { FilterListComponent } from '@pages/movies/filter/components/layouts/FilterListComponent';
 import { FilterOption } from '@pages/movies/filter/components/FilterOption';
 import optionsFromJson from '@assets/data/genres.json'
-import React from 'react';
+import { useState, useEffect } from 'react';
 
-class Filter extends React.Component {    
-    state = {
-        options: []
-    };
+function Filter(props) {    
+    const [options, setOptions] = useState([]);
+    const [selectedOption, setSelectedOption] = useState(null);
+    
+    useEffect(() => {
+        Promise
+            .resolve(optionsFromJson)
+            .then(options => {
+                setOptions(options);
+                setSelectedOption(options[0]);
+            });
+    }, []);
 
-    componentDidMount(){
-        Promise.resolve(optionsFromJson)
-            .then(options => this.setState({
-                options: options,
-                selectedOption: options[0]
-            }))
-    }
+    useEffect(() => {
+        props.changeSelectedOption(selectedOption);
+    }, [selectedOption]);
 
-    changeSelected = option => {
-        this.setState({
-            selectedOption: option
-        });
-    }
-
-    isSelected = option => option === this.state.selectedOption;
-
-    render(){
-        return (
-            <FilterListComponent>
-                {
-                    this.state.options.map(option => (
-                        <FilterOption 
-                            key={option.id}
-                            option={option}
-                            isSelected={this.isSelected(option)}
-                            changeSelected={this.changeSelected}
-                        />
-                    ))
-                }
-            </FilterListComponent>
-        );
-    }
+    return (
+        <FilterListComponent>
+            {
+                options.map(option => (
+                    <FilterOption 
+                        key={option.id}
+                        option={option}
+                        isSelected={option === selectedOption}
+                        changeSelected={setSelectedOption}
+                    />
+                ))
+            }
+        </FilterListComponent>
+    );
 }
 
 export { Filter }
