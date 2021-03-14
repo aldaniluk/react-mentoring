@@ -34,6 +34,7 @@ class Movies extends React.Component {
                             <Movie 
                                 key={movie.id}
                                 movie={movie}
+                                showMovieDetails={this.props.showMovieDetails}
                             />
                         ))
                     }

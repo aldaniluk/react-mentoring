@@ -57,6 +57,7 @@ class Movie extends React.Component {
                 <MovieComponent 
                     onMouseOver={this.showEditDelete} 
                     onMouseLeave={this.hideEditDelete}
+                    onClick={() => this.props.showMovieDetails(this.props.movie.id)}
                 >
                     <img src={'imgs/'+this.props.movie.imgSrc} />
                     <EditDeleteOptions 

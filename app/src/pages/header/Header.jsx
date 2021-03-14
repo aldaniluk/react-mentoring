@@ -6,6 +6,8 @@ import { SearchPanelComponent } from '@pages/header/components/layouts/SearchPan
 import { SearchText } from '@pages/header/components/SearchText';
 import { SearchInput } from '@pages/header/components/SearchInput';
 import { GlobalWidthComponent, SemitransparentButton } from '@globalComponents';
+import { MovieDetails } from '@pages/header/movieDetails/MovieDetails';
+import { ReturnToSearchPanel } from '@pages/header/components/ReturnToSearchPanel';
 import React from 'react'
 
 class Header extends React.Component {
@@ -27,13 +29,23 @@ class Header extends React.Component {
                     <GlobalWidthComponent>
                         <TopPanelComponent>
                             <Logo />
-                            <SemitransparentButton onClick={this.openCloseAddMovieForm}>+ ADD MOVIE</SemitransparentButton>
+                            {this.props.searchPanelShown && (
+                                <SemitransparentButton onClick={this.openCloseAddMovieForm}>+ ADD MOVIE</SemitransparentButton>
+                            )}
+                            {this.props.movieId && (
+                                <ReturnToSearchPanel onClick={this.props.showSearchPanel} />
+                            )}
                         </TopPanelComponent>
-                        <SearchPanelComponent>
-                            <SearchText />
-                            <SearchInput />
-                            <ColoredButton>SEARCH</ColoredButton>
-                        </SearchPanelComponent>
+                        {this.props.searchPanelShown && (
+                            <SearchPanelComponent>
+                                <SearchText />
+                                <SearchInput />
+                                <ColoredButton>SEARCH</ColoredButton>
+                            </SearchPanelComponent>
+                        )}
+                        {this.props.movieId && (
+                            <MovieDetails id={this.props.movieId} />
+                        )}
                     </GlobalWidthComponent>
                 </HeaderComponent>
             </>
