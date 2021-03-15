@@ -6,8 +6,8 @@ import React from 'react';
 
 class Sorter extends React.Component {
     state = {
-        selectedOption: { name: '' },
-        options: []
+        options: [],
+        selectedOption: null
     }
 
     componentDidMount(){
@@ -28,7 +28,7 @@ class Sorter extends React.Component {
         return (
             <SorterListComponent>
                 <SortByText /> 
-                <SorterDropdown selectedOption={this.state.selectedOption.name} >
+                <SorterDropdown selectedOption={this.state.selectedOption?.name ?? ''} >
                     {
                         this.state.options.map(option => (
                                 <option key={option.id} 

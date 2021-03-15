@@ -5,7 +5,8 @@ import React from 'react';
 
 class Filter extends React.Component {    
     state = {
-        options: []
+        options: [],
+        selectedOption: null
     };
 
     componentDidMount(){
