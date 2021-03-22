@@ -8,23 +8,26 @@ import { SearchInput } from '@pages/header/components/SearchInput';
 import { GlobalWidthComponent, SemitransparentButton } from '@globalComponents';
 import { MovieDetails } from '@pages/header/movieDetails';
 import { ReturnToSearchPanel } from '@pages/header/components/ReturnToSearchPanel';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 function Header(props) {
     const [addMovieFormOpened, setAddMovieFormOpened] = useState(false);
 
+    const showSearchPanel = useCallback(() => props.showSearchPanel(null), [props.showSearchPanel]);
+    const handleAddMovieForm = useCallback(() => setAddMovieFormOpened(!addMovieFormOpened));
+
     return (
         <>
-            {addMovieFormOpened && (<AddMovieForm close={() => setAddMovieFormOpened(false)} />)}
+            {addMovieFormOpened && (<AddMovieForm close={handleAddMovieForm} />)}
             <HeaderComponent>
                 <GlobalWidthComponent>
                     <TopPanelComponent>
                         <Logo />
                         {!props.movieId && (
-                            <SemitransparentButton onClick={() => setAddMovieFormOpened(true)}>+ ADD MOVIE</SemitransparentButton>
+                            <SemitransparentButton onClick={handleAddMovieForm}>+ ADD MOVIE</SemitransparentButton>
                         )}
                         {props.movieId && (
-                            <ReturnToSearchPanel onClick={props.showSearchPanel} />
+                            <ReturnToSearchPanel onClick={showSearchPanel} />
                         )}
                     </TopPanelComponent>
                     {!props.movieId && (

@@ -9,7 +9,7 @@ function App() {
 
     return (
         <ErrorBoundary>
-            <Header showSearchPanel={() => setMovieId(null)} movieId={movieId} />
+            <Header showSearchPanel={setMovieId} movieId={movieId} />
             <Movies showMovieDetails={setMovieId} />
             <Footer />
         </ErrorBoundary>

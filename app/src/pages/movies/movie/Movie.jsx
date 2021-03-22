@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { EditMovieForm } from '@pages/movies/movie/components/EditMovieForm';
 import { DeleteMovieForm } from '@pages/movies/movie/components/DeleteMovieForm';
 import { MovieDescription } from '@pages/movies/movie/components/MovieDescription';
@@ -11,19 +11,26 @@ function Movie(props) {
     const [editMovieFormOpened, setEditMovieFormOpened] = useState(false);
     const [deleteMovieFormOpened, setDeleteMovieFormOpened] = useState(false);
 
+    const handleEditMovieForm = useCallback(() => setEditMovieFormOpened(!editMovieFormOpened));
+    const handleDeleteMovieForm = useCallback(() => setDeleteMovieFormOpened(!deleteMovieFormOpened));
+    const showEditDelete = useCallback(() => setEditDeleteShown(true));
+    const hideEditDelete = useCallback(() => setEditDeleteShown(false));
+
+    const showMovieDetails = useCallback(() => props.showMovieDetails(props.movie.id), [props.showMovieDetails, props.movie.id]);
+
     return (
         <>
-            {editMovieFormOpened && (<EditMovieForm close={() => setEditMovieFormOpened(false)} movie={props.movie}/>)}
-            {deleteMovieFormOpened &&  (<DeleteMovieForm close={() => setDeleteMovieFormOpened(false)} />)}
+            {editMovieFormOpened && (<EditMovieForm close={handleEditMovieForm} movie={props.movie}/>)}
+            {deleteMovieFormOpened &&  (<DeleteMovieForm close={handleDeleteMovieForm} />)}
             <MovieComponent 
-                onMouseOver={() => setEditDeleteShown(true)} 
-                onMouseLeave={() => setEditDeleteShown(false)}
-                onClick={() => props.showMovieDetails(props.movie.id)}
+                onMouseOver={showEditDelete} 
+                onMouseLeave={hideEditDelete}
+                onClick={showMovieDetails}
             >
                 <img src={'imgs/'+props.movie.imgSrc} />
                 {editDeleteShown && (<EditDeleteOptions 
-                    openEditMovie={() => setEditMovieFormOpened(true)}
-                    openDeleteMovie={() => setDeleteMovieFormOpened(true)}
+                    openEditMovie={handleEditMovieForm}
+                    openDeleteMovie={handleDeleteMovieForm}
                 />)}
                 <MovieDescription 
                     name={props.movie.name} 

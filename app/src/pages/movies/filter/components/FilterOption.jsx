@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { VARIABLES } from '@styles/VARIABLES'
+import { useCallback } from 'react';
 
 const Option = styled.div`
     padding: 10px 0;
@@ -13,8 +14,10 @@ const Option = styled.div`
 `
 
 function FilterOption(props) {
+    const handleChangeSelected = useCallback(() => props.changeSelected(props.option), [props.changeSelected, props.option]);
+
     return (
-        <Option isSelected={props.isSelected} onClick={() => props.changeSelected(props.option)}>
+        <Option isSelected={props.isSelected} onClick={handleChangeSelected}>
             {props.option.name}
         </Option>
     );
