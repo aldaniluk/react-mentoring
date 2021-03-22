@@ -11,10 +11,10 @@ function Movie(props) {
     const [editMovieFormOpened, setEditMovieFormOpened] = useState(false);
     const [deleteMovieFormOpened, setDeleteMovieFormOpened] = useState(false);
 
-    const handleEditMovieForm = useCallback(() => setEditMovieFormOpened(!editMovieFormOpened));
-    const handleDeleteMovieForm = useCallback(() => setDeleteMovieFormOpened(!deleteMovieFormOpened));
-    const showEditDelete = useCallback(() => setEditDeleteShown(true));
-    const hideEditDelete = useCallback(() => setEditDeleteShown(false));
+    const handleEditMovieForm = useCallback(() => setEditMovieFormOpened(flag => !flag), []);
+    const handleDeleteMovieForm = useCallback(() => setDeleteMovieFormOpened(flag => !flag), []);
+    const showEditDelete = useCallback(() => setEditDeleteShown(true), []);
+    const hideEditDelete = useCallback(() => setEditDeleteShown(false), []);
 
     const showMovieDetails = useCallback(() => props.showMovieDetails(props.movie.id), [props.showMovieDetails, props.movie.id]);
 

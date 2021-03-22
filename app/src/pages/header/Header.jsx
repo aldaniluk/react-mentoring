@@ -14,7 +14,7 @@ function Header(props) {
     const [addMovieFormOpened, setAddMovieFormOpened] = useState(false);
 
     const showSearchPanel = useCallback(() => props.showSearchPanel(null), [props.showSearchPanel]);
-    const handleAddMovieForm = useCallback(() => setAddMovieFormOpened(!addMovieFormOpened));
+    const handleAddMovieForm = useCallback(() => setAddMovieFormOpened(flag => !flag), []);
 
     return (
         <>
