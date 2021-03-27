@@ -31,7 +31,12 @@ module.exports = {
         modules: ['node_modules'],
         extensions: [
             '.js', '.jsx', '.json'
-        ]
+        ],
+        alias: {
+            '@globalComponents': path.resolve(__dirname, './src/pages/components/'),
+            '@pages': path.resolve(__dirname, './src/pages/'),
+            '@assets': path.resolve(__dirname, './src/assets/')
+        }
     },
     optimization: {
         splitChunks: {
@@ -48,6 +53,10 @@ module.exports = {
                 {
                     from: path.resolve(__dirname, 'src/assets/favicon.ico'),
                     to: path.resolve(__dirname, 'dist')
+                },
+                {
+                    from: path.resolve(__dirname, 'src/assets/movies'),
+                    to: path.resolve(__dirname, 'dist/movies')
                 }
             ]
         })

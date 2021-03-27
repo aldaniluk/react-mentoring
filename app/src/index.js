@@ -1,10 +1,6 @@
 import "./styles/reset.css";
-import './styles/style.css';
-import './styles/style.less';
-import './styles/style.scss';
-import React from 'react';
 import ReactDOM from 'react-dom'
-import { App } from './components/App'
+import { App } from './pages/App'
 
 ReactDOM.render(
     <App />,
