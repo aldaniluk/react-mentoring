@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import React from 'react';
 
 const ErrorText = styled.p`
     margin-top: 100px;
@@ -6,20 +7,30 @@ const ErrorText = styled.p`
     text-align: center;
 `
 
-//just for try, now it is not working
-//'only class components can be error boundaries' from https://reactjs.org/docs/error-boundaries.html#introducing-error-boundaries
-function ErrorBoundary(props) {
-    let hasErrors = false; 
+class ErrorBoundary extends React.Component {
+    state = {
+        hasError: false
+    }
 
-    return (
-        <>
-        {
-            hasErrors
-                ? <ErrorText>Ooops! Something went wrong, we are working on it!</ErrorText> 
-                : props.children
-        }
-        </>
-    )
+    static getDerivedStateFromError(error) {
+        return { hasError: true };
+    }
+
+    componentDidCatch(error, errorInfo) {        
+        console.log(error, errorInfo);
+    }
+
+    render() {
+        return (
+            <>
+            {
+                this.state.hasError
+                    ? <ErrorText>Ooops! Something went wrong, we are working on it!</ErrorText> 
+                    : this.props.children
+            }
+            </>
+        )
+    }
 }
 
 export { ErrorBoundary }

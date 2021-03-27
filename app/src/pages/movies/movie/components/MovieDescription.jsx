@@ -1,13 +1,6 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
-const Card = styled.div`
-    color: #808080;
-`
-
-const Image = styled.img`
-    width: 100%;
-`
+import { VARIABLES } from '@styles/VARIABLES'
 
 const NameAgeComponent = styled.div`
     padding: 5px 0;
@@ -21,33 +14,27 @@ const Name = styled.p`
 `
 
 const Age = styled.div`
-    border: 1px solid #808080;
+    border: 1px solid ${VARIABLES.lightgrey};
     border-radius: 3px;
     padding: 3px 5px;
 `
 
-function Movie(props){
+function MovieDescription(props) {
     return (
-        <Card>
-            <Image src={props.imgSrc} />
+        <>
             <NameAgeComponent>
-                <Name>
-                    {props.name}
-                </Name>
-                <Age>
-                    {props.age}
-                </Age>
+                <Name>{props.name}</Name>
+                <Age>{props.age}</Age>
             </NameAgeComponent>
             {props.genre}
-        </Card>
+        </>
     );
 }
 
-Movie.propTypes = {
+MovieDescription.propTypes = {
     name: PropTypes.string.isRequired,
     age: PropTypes.number.isRequired,
     genre: PropTypes.string.isRequired,
-    imgSrc: PropTypes.string.isRequired
 }
 
-export { Movie }
+export { MovieDescription }

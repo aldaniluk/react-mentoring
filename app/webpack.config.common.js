@@ -35,7 +35,8 @@ module.exports = {
         alias: {
             '@globalComponents': path.resolve(__dirname, './src/pages/components/'),
             '@pages': path.resolve(__dirname, './src/pages/'),
-            '@assets': path.resolve(__dirname, './src/assets/')
+            '@assets': path.resolve(__dirname, './src/assets/'),
+            '@styles': path.resolve(__dirname, './src/styles/')
         }
     },
     optimization: {
@@ -51,12 +52,12 @@ module.exports = {
         new CopyWebpackPlugin({
             patterns: [
                 {
-                    from: path.resolve(__dirname, 'src/assets/favicon.ico'),
-                    to: path.resolve(__dirname, 'dist')
+                    from: path.resolve(__dirname, 'src/assets/imgs/favicon.ico'),
+                    to: path.resolve(__dirname, 'dist/imgs')
                 },
                 {
-                    from: path.resolve(__dirname, 'src/assets/movies'),
-                    to: path.resolve(__dirname, 'dist/movies')
+                    from: path.resolve(__dirname, 'src/assets/imgs/movies'),
+                    to: path.resolve(__dirname, 'dist/imgs/movies')
                 }
             ]
         })
