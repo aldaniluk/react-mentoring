@@ -36,7 +36,8 @@ module.exports = {
             '@globalComponents': path.resolve(__dirname, './src/pages/components/'),
             '@pages': path.resolve(__dirname, './src/pages/'),
             '@assets': path.resolve(__dirname, './src/assets/'),
-            '@styles': path.resolve(__dirname, './src/styles/')
+            '@styles': path.resolve(__dirname, './src/styles/'),
+            '@store': path.resolve(__dirname, './src/store/'),
         }
     },
     optimization: {
