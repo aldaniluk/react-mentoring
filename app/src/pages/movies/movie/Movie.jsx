@@ -27,15 +27,15 @@ function Movie(props) {
                 onMouseLeave={hideEditDelete}
                 onClick={showMovieDetails}
             >
-                <img src={'imgs/'+props.movie.imgSrc} />
+                <img src={props.movie.poster_path} />
                 {editDeleteShown && (<EditDeleteOptions 
                     openEditMovie={handleEditMovieForm}
                     openDeleteMovie={handleDeleteMovieForm}
                 />)}
                 <MovieDescription 
-                    name={props.movie.name} 
-                    age={props.movie.age} 
-                    genre={props.movie.genre} 
+                    title={props.movie.title} 
+                    release_date={props.movie.release_date} 
+                    genres={props.movie.genres} 
                 />
             </MovieComponent>
         </>
@@ -45,12 +45,10 @@ function Movie(props) {
 Movie.propTypes = {
     movie: PropTypes.shape({
         id: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired,
-        age: PropTypes.number.isRequired,
-        genre: PropTypes.string.isRequired,
-        imgSrc: PropTypes.string.isRequired,
-        overview: PropTypes.string.isRequired,
-        runtime: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        release_date: PropTypes.string.isRequired,
+        genres: PropTypes.array.isRequired,
+        poster_path: PropTypes.string.isRequired,
     }).isRequired
 }
 

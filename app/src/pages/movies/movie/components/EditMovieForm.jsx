@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import genresFromJson from '@assets/data/genres';
 import { FormComponent, FormOptionName, FormOptionInput, FormOptionDropdown, ColoredButton, TransparentButton } from '@globalComponents'
 import { VARIABLES } from '@styles/VARIABLES'
-import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 const TitleText = styled.div`
     color: white;
@@ -27,13 +26,7 @@ const ButtonContainer = styled.div`
 `
 
 function EditMovieForm(props) {  
-    const [genres, setGenres] = useState([]);
-    
-    useEffect(() => {
-        Promise
-            .resolve(genresFromJson)
-            .then(genres => setGenres(genres))
-    }, [])
+    const genres = useSelector(state => state.filter.options);
     
     return (
         <FormComponent>
@@ -41,13 +34,13 @@ function EditMovieForm(props) {
             <FormOptionName>MOVIE ID</FormOptionName>
             <OptionValue>{props.movie.id}</OptionValue>
             <FormOptionName>TITLE</FormOptionName>
-            <FormOptionInput value={props.movie.name} />
+            <FormOptionInput value={props.movie.title} />
             <FormOptionName>RELEASE DATE</FormOptionName>
-            <FormOptionInput value={props.movie.age} />
+            <FormOptionInput value={props.movie.release_date} />
             <FormOptionName>MOVIE URL</FormOptionName>
-            <FormOptionInput value={props.movie.movieUrl} />
+            <FormOptionInput value={props.movie.poster_path} />
             <FormOptionName>GENRE</FormOptionName>
-            <FormOptionDropdown defaultValue={props.movie.genre.toUpperCase()}>
+            <FormOptionDropdown defaultValue={props.movie.genres.join()}>
                 {
                     genres.map(genre => (
                             <option key={genre.id} value={genre.name}>
@@ -74,12 +67,12 @@ EditMovieForm.propTypes = {
     close: PropTypes.func.isRequired,
     movie: PropTypes.shape({
         id: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired,
-        age: PropTypes.number.isRequired,
-        genre: PropTypes.string.isRequired,
-        imgSrc: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        release_date: PropTypes.string.isRequired,
+        genres: PropTypes.array.isRequired,
+        poster_path: PropTypes.string.isRequired,
         overview: PropTypes.string.isRequired,
-        runtime: PropTypes.string.isRequired,
+        runtime: PropTypes.number.isRequired,
     })
 }
 

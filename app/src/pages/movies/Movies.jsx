@@ -17,7 +17,7 @@ function Movies(props) {
     const selectedSorterOption = useSelector(state => state.sorter.selectedOption);
 
     useEffect(() => {
-        store.dispatch(getMovies(selectedFilterOption, selectedSorterOption));
+        store.dispatch(getMovies);
     }, [selectedFilterOption, selectedSorterOption])
 
     return (

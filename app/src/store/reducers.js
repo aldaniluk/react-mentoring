@@ -6,32 +6,15 @@ import { initialState } from './initialState';
 function moviesReducer(state = initialState.movies, action){
     switch(action.type){
         case actionTypes.GET_MOVIES:
-            return getMovies(action.data);
+            return state;
+        case actionTypes.SET_MOVIES:
+            return action.data;
         case actionTypes.ADD_MOVIE:
             moviesFromJson.push(action.data);
             return moviesFromJson;
         default:
             return state;
     }
-}
-
-function getMovies(options){
-    var movies = [...moviesFromJson];
-    if(options.filterOption && options.filterOption.name.toLowerCase() !== 'all'){
-        movies = movies.filter(m => m.genre.toLowerCase() === options.filterOption.name.toLowerCase());
-    }
-
-    if(options.sorterOption){
-        var field = options.sorterOption.field;
-        
-        movies = movies.sort((a, b) => {
-            if(a[field] < b[field]) return -1;
-            if(a[field] > b[field]) return 1;
-            return 0;
-        });
-    }
-
-    return movies;
 }
 
 function filterReducer(state = initialState.filter, action){

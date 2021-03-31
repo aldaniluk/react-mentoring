@@ -23,18 +23,18 @@ function MovieDescription(props) {
     return (
         <>
             <NameAgeComponent>
-                <Name>{props.name}</Name>
-                <Age>{props.age}</Age>
+                <Name>{props.title}</Name>
+                <Age>{props.release_date.substring(0, 4)}</Age>
             </NameAgeComponent>
-            {props.genre}
+            {props.genres.join()}
         </>
     );
 }
 
 MovieDescription.propTypes = {
-    name: PropTypes.string.isRequired,
-    age: PropTypes.number.isRequired,
-    genre: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    release_date: PropTypes.string.isRequired,
+    genres: PropTypes.array.isRequired,
 }
 
 export { MovieDescription }
