@@ -2,7 +2,9 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { FormComponent, FormOptionName, FormOptionInput, FormOptionDropdown, ColoredButton, TransparentButton } from '@globalComponents'
 import { VARIABLES } from '@styles/VARIABLES'
-import { useSelector } from 'react-redux';
+import { useState, useEffect } from 'react'
+import { store } from '@store/store';
+import { updateMovie } from '@store/actionCreators';
 
 const TitleText = styled.div`
     color: white;
@@ -26,7 +28,28 @@ const ButtonContainer = styled.div`
 `
 
 function EditMovieForm(props) {  
-    const genres = useSelector(state => state.filter.options);
+    const [title, setTitle] = useState(props.movie.title);
+    const [release_date, setReleaseDate] = useState(props.movie.release_date);
+    const [poster_path, setUrl] = useState(props.movie.poster_path);
+    const [genres, setGenres] = useState(props.movie.genres.join(','));
+    const [overview, setOverview] = useState(props.movie.overview);
+    const [runtime, setRuntime] = useState(props.movie.runtime);
+
+    function confirmUpdate(event){
+        event.preventDefault();
+        var movie = {
+            ...props.movie,
+            title: title,
+            release_date: release_date,
+            poster_path: poster_path,
+            genres: genres.split(','),
+            overview: overview,
+            runtime: Number.parseInt(runtime)
+        }
+
+        store.dispatch(updateMovie(movie));
+        props.close();
+    }
     
     return (
         <FormComponent>
@@ -34,13 +57,15 @@ function EditMovieForm(props) {
             <FormOptionName>MOVIE ID</FormOptionName>
             <OptionValue>{props.movie.id}</OptionValue>
             <FormOptionName>TITLE</FormOptionName>
-            <FormOptionInput value={props.movie.title} />
+            <FormOptionInput defaultValue={title} onChange={event => setTitle(event.target.value)} />
             <FormOptionName>RELEASE DATE</FormOptionName>
-            <FormOptionInput value={props.movie.release_date} />
+            <FormOptionInput defaultValue={release_date} onChange={event => setReleaseDate(event.target.value)} />
             <FormOptionName>MOVIE URL</FormOptionName>
-            <FormOptionInput value={props.movie.poster_path} />
+            <FormOptionInput defaultValue={poster_path} onChange={event => setUrl(event.target.value)} />
             <FormOptionName>GENRE</FormOptionName>
-            <FormOptionDropdown defaultValue={props.movie.genres.join()}>
+            <FormOptionInput defaultValue={genres} onChange={event => setGenres(event.target.value)} />
+            {/* Let's forget about dropdown for a while
+             <FormOptionDropdown defaultValue={props.movie.genres.join()}>
                 {
                     genres.map(genre => (
                             <option key={genre.id} value={genre.name}>
@@ -49,14 +74,14 @@ function EditMovieForm(props) {
                         )
                     )
                 }
-            </FormOptionDropdown>
+            </FormOptionDropdown> */}
             <FormOptionName>OVERVIEW</FormOptionName>
-            <FormOptionInput value={props.movie.overview} />
+            <FormOptionInput defaultValue={overview} onChange={event => setOverview(event.target.value)} />
             <FormOptionName>RUNTIME</FormOptionName>
-            <FormOptionInput value={props.movie.runtime} />
+            <FormOptionInput defaultValue={runtime} onChange={event => setRuntime(event.target.value)} />
             <ButtonContainer>
                 <TransparentButton onClick={props.close}>RESET</TransparentButton>
-                <ColoredButton>Save</ColoredButton>
+                <ColoredButton onClick={confirmUpdate}>Save</ColoredButton>
             </ButtonContainer>
         </FormComponent>
     )

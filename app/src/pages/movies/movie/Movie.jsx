@@ -21,7 +21,7 @@ function Movie(props) {
     return (
         <>
             {editMovieFormOpened && (<EditMovieForm close={handleEditMovieForm} movie={props.movie}/>)}
-            {deleteMovieFormOpened &&  (<DeleteMovieForm close={handleDeleteMovieForm} />)}
+            {deleteMovieFormOpened &&  (<DeleteMovieForm id={props.movie.id} close={handleDeleteMovieForm} />)}
             <MovieComponent 
                 onMouseOver={showEditDelete} 
                 onMouseLeave={hideEditDelete}

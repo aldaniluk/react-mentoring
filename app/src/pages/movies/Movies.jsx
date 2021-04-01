@@ -15,10 +15,11 @@ function Movies(props) {
     const movies = useSelector(state => state.movies);
     const selectedFilterOption = useSelector(state => state.filter.selectedOption);
     const selectedSorterOption = useSelector(state => state.sorter.selectedOption);
+    const selectedSorterAsc = useSelector(state => state.sorter.asc);
 
     useEffect(() => {
         store.dispatch(getMovies);
-    }, [selectedFilterOption, selectedSorterOption])
+    }, [selectedFilterOption, selectedSorterOption, selectedSorterAsc])
 
     return (
         <MoviesComponent>

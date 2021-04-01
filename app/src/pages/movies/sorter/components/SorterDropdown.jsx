@@ -21,7 +21,7 @@ const Dropdown = styled.select`
 
 function SorterDropdown(props) {
     return (
-        <Dropdown defaultValue={props.selectedOption?.id} onChange={props.changeSelected}>
+        <Dropdown defaultValue={props.selectedOption?.id} onClick={props.changeSelected}>
             {props.children}
         </Dropdown>
     );

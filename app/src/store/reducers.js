@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
 import { actionTypes } from './actionTypes';
-import moviesFromJson from '@assets/data/movies';
 import { initialState } from './initialState';
 
 function moviesReducer(state = initialState.movies, action){
@@ -9,9 +8,12 @@ function moviesReducer(state = initialState.movies, action){
             return state;
         case actionTypes.SET_MOVIES:
             return action.data;
+        case actionTypes.DELETE_MOVIE:
+            return action.data;
         case actionTypes.ADD_MOVIE:
-            moviesFromJson.push(action.data);
-            return moviesFromJson;
+            return action.data;
+        case actionTypes.UPDATE_MOVIE:
+            return action.data;
         default:
             return state;
     }
@@ -34,7 +36,8 @@ function sorterReducer(state = initialState.sorter, action){
         case actionTypes.SET_SORTER:
             return {
                 options: state.options,
-                selectedOption: action.data
+                selectedOption: action.data.option,
+                asc: action.data.asc
             }
         default:
             return state;

@@ -55,10 +55,6 @@ module.exports = {
                 {
                     from: path.resolve(__dirname, 'src/assets/imgs/favicon.ico'),
                     to: path.resolve(__dirname, 'dist/imgs')
-                },
-                {
-                    from: path.resolve(__dirname, 'src/assets/imgs/movies'),
-                    to: path.resolve(__dirname, 'dist/imgs/movies')
                 }
             ]
         })

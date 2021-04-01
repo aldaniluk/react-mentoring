@@ -1,7 +1,9 @@
 import { actionTypes } from './actionTypes';
 
+const globalUrl = 'http://localhost:4000';
+
 function getMovies(dispatch, getState){
-    var url = 'http://localhost:4000/movies';
+    var url = globalUrl + '/movies';
 
     var state = getState();
 
@@ -12,7 +14,8 @@ function getMovies(dispatch, getState){
 
     var sorter = state.sorter.selectedOption.field.toLowerCase();
     if(sorter){
-        url += (filter && filter != 'all' ? '&' : '?') + `sortBy=${sorter}`;
+        var sortOrder = state.sorter.asc ? 'asc' : 'desc';
+        url += (filter && filter != 'all' ? '&' : '?') + `sortBy=${sorter}&sortOrder=${sortOrder}`;
     }
 
     fetch(url)
@@ -24,10 +27,40 @@ function getMovies(dispatch, getState){
         }))
 }
 
+function deleteMovie(id){
+    return (dispatch, getState) => {
+        var url = globalUrl + `/movies/${id}`;
+
+        fetch(url, {
+            method: 'DELETE' 
+        })
+        .then(res => dispatch(getMovies));
+    }
+}
+
 function addMovie(movie){
-    return {
-        type: actionTypes.ADD_MOVIE,
-        data: movie
+    return (dispatch, getState) => {
+        var url = globalUrl + `/movies`;
+
+        fetch(url, { 
+            method: 'POST', 
+            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, 
+            body: JSON.stringify(movie) 
+        })
+        .then(res => dispatch(getMovies));
+    }
+}
+
+function updateMovie(movie){
+    return (dispatch, getState) => {
+        var url = globalUrl + `/movies`;
+
+        fetch(url, { 
+            method: 'PUT', 
+            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, 
+            body: JSON.stringify(movie) 
+        })
+        .then(res => dispatch(getMovies));
     }
 }
 
@@ -38,11 +71,11 @@ function setFilterOption(option){
     }
 }
 
-function setSorterOption(option){
+function setSorterOption(option, asc){
     return {
         type: actionTypes.SET_SORTER,
-        data: option
+        data: { option, asc }
     }
 }
 
-export { getMovies, addMovie, setFilterOption, setSorterOption }
+export { getMovies, deleteMovie, addMovie, updateMovie, setFilterOption, setSorterOption }

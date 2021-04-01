@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { FormComponent, ColoredButton, TransparentButton } from '@globalComponents'
+import { store } from '@store/store';
+import { deleteMovie } from '@store/actionCreators';
 
 const TitleText = styled.div`
     color: white;
@@ -21,19 +23,25 @@ const ButtonContainer = styled.div`
 `
 
 function DeleteMovieForm(props) {    
+    function confirmDelete(event){
+        event.preventDefault();
+        store.dispatch(deleteMovie(props.id));
+    }
+
     return (
         <FormComponent>
             <TitleText>DELETE MOVIE</TitleText>
             <Text>Are you sure you want to delete this movie?</Text>
             <ButtonContainer>
                 <TransparentButton onClick={props.close}>RESET</TransparentButton>
-                <ColoredButton>Confirm</ColoredButton>
+                <ColoredButton onClick={confirmDelete}>Confirm</ColoredButton>
             </ButtonContainer>
         </FormComponent>
     )
 }
 
 DeleteMovieForm.propTypes = {
+    id: PropTypes.number.isRequired,
     close: PropTypes.func.isRequired,
 }
 

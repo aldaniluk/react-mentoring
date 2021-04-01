@@ -28,18 +28,18 @@ const filterOptions = [
 const sorterOptions = [
     {
         "id": 1,
-        "name": "GENRE",
-        "field": "genre"
+        "name": "RELEASE DATE",
+        "field": "release_date"
     }, 
     {
         "id": 2,
         "name": "RATING",
-        "field": "rating"
+        "field": "vote_average"
     }, 
     {
         "id": 3,
-        "name": "RELEASE DATE",
-        "field": "age"
+        "name": "TITLE",
+        "field": "title"
     }
 ];
 
@@ -51,7 +51,8 @@ const initialState = {
     },
     sorter: {
         options: sorterOptions,
-        selectedOption: sorterOptions[0]
+        selectedOption: sorterOptions[0], 
+        asc: true
     },
 };
 
