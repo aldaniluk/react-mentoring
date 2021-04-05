@@ -38,6 +38,7 @@ module.exports = {
             '@assets': path.resolve(__dirname, './src/assets/'),
             '@styles': path.resolve(__dirname, './src/styles/'),
             '@store': path.resolve(__dirname, './src/store/'),
+            '@services': path.resolve(__dirname, './src/services/'),
         }
     },
     optimization: {

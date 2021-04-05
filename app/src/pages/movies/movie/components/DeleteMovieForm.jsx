@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { FormComponent, ColoredButton, TransparentButton } from '@globalComponents'
+import { FormContainer, Form, ColoredButton, TransparentButton } from '@globalComponents'
 import { store } from '@store/store';
 import { deleteMovie } from '@store/actionCreators';
 
@@ -29,14 +29,16 @@ function DeleteMovieForm(props) {
     }
 
     return (
-        <FormComponent>
-            <TitleText>DELETE MOVIE</TitleText>
-            <Text>Are you sure you want to delete this movie?</Text>
-            <ButtonContainer>
-                <TransparentButton onClick={props.close}>RESET</TransparentButton>
-                <ColoredButton onClick={confirmDelete}>Confirm</ColoredButton>
-            </ButtonContainer>
-        </FormComponent>
+        <FormContainer>
+            <Form>
+                <TitleText>DELETE MOVIE</TitleText>
+                <Text>Are you sure you want to delete this movie?</Text>
+                <ButtonContainer>
+                    <TransparentButton onClick={props.close}>RESET</TransparentButton>
+                    <ColoredButton onClick={confirmDelete}>Confirm</ColoredButton>
+                </ButtonContainer>
+            </Form>
+        </FormContainer>
     )
 }
 
