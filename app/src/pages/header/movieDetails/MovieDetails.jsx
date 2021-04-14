@@ -7,13 +7,14 @@ import { MovieDetailsText } from '@pages/header/movieDetails/components/MovieDet
 import { MovieDetailsAccentText } from '@pages/header/movieDetails/components/MovieDetailsAccentText';
 import { AgeTimeContainer } from '@pages/header/movieDetails/components/layouts/AgeTimeContainer';
 import { useSelector } from 'react-redux';
+import { store } from '@store/store';
+import { getMovie } from '@store/actionCreators';
 
 function MovieDetails(props) {
-    const movies = useSelector(state => state.movies);
-    const [movie, setMovie] = useState({});
+    const movie = useSelector(state => state.movie);
 
     useEffect(() => {
-        setMovie(movies.find(m => m.id === props.id));
+        store.dispatch(getMovie(props.id));
     }, [props.id])
 
     return (
@@ -21,7 +22,6 @@ function MovieDetails(props) {
             <MovieDetailsImg poster_path={movie.poster_path} />
             <div>
                 <MovieDetailsName title={movie.title} vote_average={movie.vote_average} />
-                {/* {movie.isOscarWinning && <MovieDetailsText>Oscar winning Movie</MovieDetailsText>} */}
                 <AgeTimeContainer>
                     <MovieDetailsAccentText>{movie.release_date}</MovieDetailsAccentText>
                     <MovieDetailsAccentText>{movie.runtime} min</MovieDetailsAccentText>

@@ -45,6 +45,7 @@ const sorterOptions = [
 
 const initialState = {
     movies: [],
+    movie: null,
     filter: {
         options: filterOptions,
         selectedOption: filterOptions[0]

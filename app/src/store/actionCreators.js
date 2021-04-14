@@ -2,29 +2,53 @@ import { actionTypes } from './actionTypes';
 
 const globalUrl = 'http://localhost:4000';
 
-function getMovies(dispatch, getState){
-    var url = globalUrl + '/movies';
+function getMovies(search) {
+    return (dispatch, getState) => {
+        var url = globalUrl + '/movies';
+        var useQuestion = true;
 
-    var state = getState();
+        var state = getState();
 
-    var filter = state.filter.selectedOption.name.toLowerCase();
-    if(filter && filter != 'all'){
-        url += `?filter=${filter}`;
+        var filter = state.filter.selectedOption.name.toLowerCase();
+        if(filter && filter != 'all'){
+            url += `?filter=${filter}`;
+            useQuestion = false;
+        }
+
+        var sorter = state.sorter.selectedOption.field.toLowerCase();
+        if(sorter){
+            var sortOrder = state.sorter.asc ? 'asc' : 'desc';
+            url += (useQuestion ? '?' : '&') + `sortBy=${sorter}&sortOrder=${sortOrder}`;
+            useQuestion = false;
+        }
+
+        if(search){
+            url += (useQuestion ? '?' : '&') + `search=${search}&searchBy=title`;
+        }
+
+        console.log(url);
+
+        fetch(url)
+            .then(res => res.json())
+            .then(res => res.data)
+            .then(res => dispatch({
+                type: actionTypes.SET_MOVIES,
+                data: res
+            }))
     }
+}
 
-    var sorter = state.sorter.selectedOption.field.toLowerCase();
-    if(sorter){
-        var sortOrder = state.sorter.asc ? 'asc' : 'desc';
-        url += (filter && filter != 'all' ? '&' : '?') + `sortBy=${sorter}&sortOrder=${sortOrder}`;
+function getMovie(id){
+    return (dispatch, getState) => {
+        var url = globalUrl + `/movies/${id}`;
+
+        fetch(url)
+            .then(res => res.json())
+            .then(res => dispatch({
+                type: actionTypes.SET_MOVIE,
+                data: res
+            }))
     }
-
-    fetch(url)
-        .then(res => res.json())
-        .then(res => res.data)
-        .then(res => dispatch({
-            type: actionTypes.SET_MOVIES,
-            data: res
-        }))
 }
 
 function deleteMovie(id){
@@ -78,4 +102,4 @@ function setSorterOption(option, asc){
     }
 }
 
-export { getMovies, deleteMovie, addMovie, updateMovie, setFilterOption, setSorterOption }
+export { getMovies, getMovie, deleteMovie, addMovie, updateMovie, setFilterOption, setSorterOption }

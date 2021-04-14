@@ -6,14 +6,13 @@ import { SearchPanelComponent } from '@pages/header/components/layouts/SearchPan
 import { SearchText } from '@pages/header/components/SearchText';
 import { SearchInput } from '@pages/header/components/SearchInput';
 import { GlobalWidthComponent, SemitransparentButton } from '@globalComponents';
-import { MovieDetails } from '@pages/header/movieDetails';
-import { ReturnToSearchPanel } from '@pages/header/components/ReturnToSearchPanel';
 import { useState, useCallback } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 
 function Header(props) {
     const [addMovieFormOpened, setAddMovieFormOpened] = useState(false);
+    const [search, setSearch] = useState(null);
 
-    const showSearchPanel = useCallback(() => props.showSearchPanel(null), [props.showSearchPanel]);
     const handleAddMovieForm = useCallback(() => setAddMovieFormOpened(flag => !flag), []);
 
     return (
@@ -23,23 +22,15 @@ function Header(props) {
                 <GlobalWidthComponent>
                     <TopPanelComponent>
                         <Logo />
-                        {!props.movieId && (
-                            <SemitransparentButton onClick={handleAddMovieForm}>+ ADD MOVIE</SemitransparentButton>
-                        )}
-                        {props.movieId && (
-                            <ReturnToSearchPanel onClick={showSearchPanel} />
-                        )}
+                        <SemitransparentButton onClick={handleAddMovieForm}>+ ADD MOVIE</SemitransparentButton>
                     </TopPanelComponent>
-                    {!props.movieId && (
-                        <SearchPanelComponent>
-                            <SearchText />
-                            <SearchInput />
+                    <SearchPanelComponent>
+                        <SearchText />
+                        <SearchInput placeholder='What do you want to watch?' onChange={event => setSearch(event.target.value)} />
+                        <Link to={search ? `/film?search=${search}` : '/'}>
                             <ColoredButton>SEARCH</ColoredButton>
-                        </SearchPanelComponent>
-                    )}
-                    {props.movieId && (
-                        <MovieDetails id={props.movieId} />
-                    )}
+                        </Link>
+                    </SearchPanelComponent>
                 </GlobalWidthComponent>
             </HeaderComponent>
         </>
