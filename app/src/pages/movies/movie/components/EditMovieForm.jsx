@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import genresFromJson from '@assets/data/genres';
 import { FormComponent, FormOptionName, FormOptionInput, FormOptionDropdown, ColoredButton, TransparentButton } from '@globalComponents'
 import { VARIABLES } from '@styles/VARIABLES'
-import React from 'react';
+import { useState, useEffect } from 'react';
 
 const TitleText = styled.div`
     color: white;
@@ -26,49 +26,47 @@ const ButtonContainer = styled.div`
     }
 `
 
-class EditMovieForm extends React.Component {  
-    state = {
-        genres: []
-    }
-
-    componentDidMount(){
-        Promise.resolve(genresFromJson)
-            .then(genres => this.setState({ genres }))
-    }
+function EditMovieForm(props) {  
+    const [genres, setGenres] = useState([]);
     
-    render() {
-        return (
-            <FormComponent>
-                <TitleText>EDIT MOVIE</TitleText>
-                <FormOptionName>MOVIE ID</FormOptionName>
-                <OptionValue>{this.props.movie.id}</OptionValue>
-                <FormOptionName>TITLE</FormOptionName>
-                <FormOptionInput value={this.props.movie.name} />
-                <FormOptionName>RELEASE DATE</FormOptionName>
-                <FormOptionInput value={this.props.movie.age} />
-                <FormOptionName>MOVIE URL</FormOptionName>
-                <FormOptionInput value={this.props.movie.movieUrl} />
-                <FormOptionName>GENRE</FormOptionName>
-                <FormOptionDropdown defaultValue={this.props.movie.genre.toUpperCase()}>
-                    {
-                        this.state.genres.map(genre => 
-                                <option key={genre.id} value={genre.name}>
-                                    {genre.name}
-                                </option>
-                            )
-                    }
-                </FormOptionDropdown>
-                <FormOptionName>OVERVIEW</FormOptionName>
-                <FormOptionInput value={this.props.movie.overview} />
-                <FormOptionName>RUNTIME</FormOptionName>
-                <FormOptionInput value={this.props.movie.runtime} />
-                <ButtonContainer>
-                    <TransparentButton onClick={this.props.close}>RESET</TransparentButton>
-                    <ColoredButton>Save</ColoredButton>
-                </ButtonContainer>
-            </FormComponent>
-        )
-    }
+    useEffect(() => {
+        Promise
+            .resolve(genresFromJson)
+            .then(genres => setGenres(genres))
+    }, [])
+    
+    return (
+        <FormComponent>
+            <TitleText>EDIT MOVIE</TitleText>
+            <FormOptionName>MOVIE ID</FormOptionName>
+            <OptionValue>{props.movie.id}</OptionValue>
+            <FormOptionName>TITLE</FormOptionName>
+            <FormOptionInput value={props.movie.name} />
+            <FormOptionName>RELEASE DATE</FormOptionName>
+            <FormOptionInput value={props.movie.age} />
+            <FormOptionName>MOVIE URL</FormOptionName>
+            <FormOptionInput value={props.movie.movieUrl} />
+            <FormOptionName>GENRE</FormOptionName>
+            <FormOptionDropdown defaultValue={props.movie.genre.toUpperCase()}>
+                {
+                    genres.map(genre => (
+                            <option key={genre.id} value={genre.name}>
+                                {genre.name}
+                            </option>
+                        )
+                    )
+                }
+            </FormOptionDropdown>
+            <FormOptionName>OVERVIEW</FormOptionName>
+            <FormOptionInput value={props.movie.overview} />
+            <FormOptionName>RUNTIME</FormOptionName>
+            <FormOptionInput value={props.movie.runtime} />
+            <ButtonContainer>
+                <TransparentButton onClick={props.close}>RESET</TransparentButton>
+                <ColoredButton>Save</ColoredButton>
+            </ButtonContainer>
+        </FormComponent>
+    )
 }
 
 

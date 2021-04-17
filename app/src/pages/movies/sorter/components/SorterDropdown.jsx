@@ -21,14 +21,14 @@ const Dropdown = styled.select`
 
 function SorterDropdown(props) {
     return (
-        <Dropdown defaultValue={props.selectedOption}>
+        <Dropdown defaultValue={props.selectedOption?.id} onChange={props.changeSelected}>
             {props.children}
         </Dropdown>
     );
 }
 
 SorterDropdown.propTypes = {
-    selectedOption: PropTypes.string.isRequired
+    selectedOption: PropTypes.object
 }
 
 export { SorterDropdown }

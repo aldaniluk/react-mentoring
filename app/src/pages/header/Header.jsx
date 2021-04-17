@@ -6,39 +6,44 @@ import { SearchPanelComponent } from '@pages/header/components/layouts/SearchPan
 import { SearchText } from '@pages/header/components/SearchText';
 import { SearchInput } from '@pages/header/components/SearchInput';
 import { GlobalWidthComponent, SemitransparentButton } from '@globalComponents';
-import React from 'react'
+import { MovieDetails } from '@pages/header/movieDetails';
+import { ReturnToSearchPanel } from '@pages/header/components/ReturnToSearchPanel';
+import { useState, useCallback } from 'react';
 
-class Header extends React.Component {
-    state = {
-        addMovieFormOpened: false
-    }
+function Header(props) {
+    const [addMovieFormOpened, setAddMovieFormOpened] = useState(false);
 
-    openCloseAddMovieForm = () => {
-        this.setState((state) => ({
-            addMovieFormOpened: !state.addMovieFormOpened
-        }))
-    }
+    const showSearchPanel = useCallback(() => props.showSearchPanel(null), [props.showSearchPanel]);
+    const handleAddMovieForm = useCallback(() => setAddMovieFormOpened(flag => !flag), []);
 
-    render() {
-        return (
-            <>
-                {this.state.addMovieFormOpened && (<AddMovieForm close={this.openCloseAddMovieForm} />)}
-                <HeaderComponent>
-                    <GlobalWidthComponent>
-                        <TopPanelComponent>
-                            <Logo />
-                            <SemitransparentButton onClick={this.openCloseAddMovieForm}>+ ADD MOVIE</SemitransparentButton>
-                        </TopPanelComponent>
+    return (
+        <>
+            {addMovieFormOpened && (<AddMovieForm close={handleAddMovieForm} />)}
+            <HeaderComponent>
+                <GlobalWidthComponent>
+                    <TopPanelComponent>
+                        <Logo />
+                        {!props.movieId && (
+                            <SemitransparentButton onClick={handleAddMovieForm}>+ ADD MOVIE</SemitransparentButton>
+                        )}
+                        {props.movieId && (
+                            <ReturnToSearchPanel onClick={showSearchPanel} />
+                        )}
+                    </TopPanelComponent>
+                    {!props.movieId && (
                         <SearchPanelComponent>
                             <SearchText />
                             <SearchInput />
                             <ColoredButton>SEARCH</ColoredButton>
                         </SearchPanelComponent>
-                    </GlobalWidthComponent>
-                </HeaderComponent>
-            </>
-        )
-    }
+                    )}
+                    {props.movieId && (
+                        <MovieDetails id={props.movieId} />
+                    )}
+                </GlobalWidthComponent>
+            </HeaderComponent>
+        </>
+    )
 }
 
 export { Header }

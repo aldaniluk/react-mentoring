@@ -1,14 +1,17 @@
 [
     {
         "id": 1,
-        "name": "RELEASE DATE"
+        "name": "GENRE",
+        "field": "genre"
     }, 
     {
         "id": 2,
-        "name": "NAME"
+        "name": "RATING",
+        "field": "rating"
     }, 
     {
         "id": 3,
-        "name": "AGE"
+        "name": "RELEASE DATE",
+        "field": "age"
     }
 ]

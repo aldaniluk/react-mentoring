@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { VARIABLES } from '@styles/VARIABLES'
+import { VARIABLES } from '@styles/VARIABLES';
 
 const Container = styled.form`
     position: fixed;

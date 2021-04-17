@@ -19,12 +19,8 @@ const Option = styled.button`
 
 // temporarily instead of 3 dots icon
 function EditDeleteOptions(props) {
-    if(!props.show){
-        return null;
-    }
-
     return (
-        <Options show={props.show}>
+        <Options>
             <Option onClick={props.openEditMovie}>Edit</Option>
             <Option onClick={props.openDeleteMovie}>Delete</Option>
         </Options>
@@ -32,7 +28,6 @@ function EditDeleteOptions(props) {
 }
 
 EditDeleteOptions.propTypes = {
-    show: PropTypes.bool.isRequired,
     openEditMovie: PropTypes.func.isRequired,
     openDeleteMovie: PropTypes.func.isRequired,
 }

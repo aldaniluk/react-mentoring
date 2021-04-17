@@ -1,78 +1,45 @@
 import PropTypes from 'prop-types';
-import React from 'react';
-import { EditMovieForm } from './components/EditMovieForm'
-import { DeleteMovieForm } from './components/DeleteMovieForm'
-import { MovieDescription } from './components/MovieDescription'
-import { MovieComponent } from './components/layouts/MovieComponent'
-import { EditDeleteOptions } from './components/EditDeleteOptions'
+import { useState, useCallback } from 'react';
+import { EditMovieForm } from '@pages/movies/movie/components/EditMovieForm';
+import { DeleteMovieForm } from '@pages/movies/movie/components/DeleteMovieForm';
+import { MovieDescription } from '@pages/movies/movie/components/MovieDescription';
+import { MovieComponent } from '@pages/movies/movie/components/layouts/MovieComponent';
+import { EditDeleteOptions } from '@pages/movies/movie/components/EditDeleteOptions';
 
-class Movie extends React.Component {
-    state = {
-        editDeleteShown: false,
-        editMovieFormOpened: false,
-        deleteMovieFormOpened: false
-    }
+function Movie(props) {
+    const [editDeleteShown, setEditDeleteShown] = useState(false);
+    const [editMovieFormOpened, setEditMovieFormOpened] = useState(false);
+    const [deleteMovieFormOpened, setDeleteMovieFormOpened] = useState(false);
 
-    showEditDelete = () => {
-        this.setState({
-            editDeleteShown: true
-        });
-    }
+    const handleEditMovieForm = useCallback(() => setEditMovieFormOpened(flag => !flag), []);
+    const handleDeleteMovieForm = useCallback(() => setDeleteMovieFormOpened(flag => !flag), []);
+    const showEditDelete = useCallback(() => setEditDeleteShown(true), []);
+    const hideEditDelete = useCallback(() => setEditDeleteShown(false), []);
 
-    hideEditDelete = () => {
-        this.setState({
-            editDeleteShown: false
-        });
-    }
+    const showMovieDetails = useCallback(() => props.showMovieDetails(props.movie.id), [props.showMovieDetails, props.movie.id]);
 
-    openEditMovieForm = () => {
-        this.setState({
-            editMovieFormOpened: true
-        });
-    }
-
-    closeEditMovieForm = () => {
-        this.setState({
-            editMovieFormOpened: false
-        });
-    }
-
-    openDeleteMovieForm = () => {
-        this.setState({
-            deleteMovieFormOpened: true
-        });
-    }
-
-    closeDeleteMovieForm = () => {
-        this.setState({
-            deleteMovieFormOpened: false
-        });
-    }
-
-    render() {
-        return (
-            <>
-                {this.state.editMovieFormOpened && (<EditMovieForm close={this.closeEditMovieForm} movie={this.props.movie}/>)}
-                {this.state.deleteMovieFormOpened &&  (<DeleteMovieForm close={this.closeDeleteMovieForm} />)}
-                <MovieComponent 
-                    onMouseOver={this.showEditDelete} 
-                    onMouseLeave={this.hideEditDelete}
-                >
-                    <img src={'imgs/'+this.props.movie.imgSrc} />
-                    <EditDeleteOptions 
-                        show={this.state.editDeleteShown}
-                        openEditMovie={this.openEditMovieForm}
-                        openDeleteMovie={this.openDeleteMovieForm}
-                    />
-                    <MovieDescription 
-                        name={this.props.movie.name} 
-                        age={this.props.movie.age} 
-                        genre={this.props.movie.genre} 
-                    />
-                </MovieComponent>
-            </>
-        );
-    }
+    return (
+        <>
+            {editMovieFormOpened && (<EditMovieForm close={handleEditMovieForm} movie={props.movie}/>)}
+            {deleteMovieFormOpened &&  (<DeleteMovieForm close={handleDeleteMovieForm} />)}
+            <MovieComponent 
+                onMouseOver={showEditDelete} 
+                onMouseLeave={hideEditDelete}
+                onClick={showMovieDetails}
+            >
+                <img src={'imgs/'+props.movie.imgSrc} />
+                {editDeleteShown && (<EditDeleteOptions 
+                    openEditMovie={handleEditMovieForm}
+                    openDeleteMovie={handleDeleteMovieForm}
+                />)}
+                <MovieDescription 
+                    name={props.movie.name} 
+                    age={props.movie.age} 
+                    genre={props.movie.genre} 
+                />
+            </MovieComponent>
+        </>
+    );
 }
 
 Movie.propTypes = {
