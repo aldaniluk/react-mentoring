@@ -7,9 +7,10 @@ import { MovieDetailsText } from '@pages/header/movieDetails/components/MovieDet
 import { MovieDetailsAccentText } from '@pages/header/movieDetails/components/MovieDetailsAccentText';
 import { AgeTimeContainer } from '@pages/header/movieDetails/components/layouts/AgeTimeContainer';
 import { useSelector } from 'react-redux';
+import { moviesSelector } from '@store/selectors';
 
 function MovieDetails(props) {
-    const movies = useSelector(state => state.movies);
+    const movies = useSelector(moviesSelector);
     const [movie, setMovie] = useState({});
 
     useEffect(() => {

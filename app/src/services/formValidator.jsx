@@ -5,8 +5,8 @@ export const formValidator = (values, genres) => {
     const errors = {};
 
     validateTitle(values.title, errors);
-    validateReleaseDate(values.releaseDate, errors);
-    validateUrl(values.url, errors);
+    validateReleaseDate(values.release_date, errors);
+    validateUrl(values.poster_path, errors);
     validateGenres(values.genres, genres, errors);
     validateOverview(values.overview, errors);
     validateRuntime(values.runtime, errors);
@@ -20,21 +20,21 @@ function validateTitle(title, errors){
     }
 }
 
-function validateReleaseDate(releaseDate, errors){
-    if(!releaseDate) {
-        errors.releaseDate = 'Release date is required';
+function validateReleaseDate(release_date, errors){
+    if(!release_date) {
+        errors.release_date = 'Release date is required';
     }
-    else if(!releaseDate.match(dateRegex)) {
-        errors.releaseDate = 'Release date must be in format yyyy-mm-dd';
+    else if(!release_date.match(dateRegex)) {
+        errors.release_date = 'Release date must be in format yyyy-mm-dd';
     }
 }
 
-function validateUrl(url, errors){
-    if(!url) {
-        errors.url = 'Url is required';
+function validateUrl(poster_path, errors){
+    if(!poster_path) {
+        errors.poster_path = 'Url is required';
     }
-    else if(!url.includes('http')) {
-        errors.url = 'Url is incorrect';
+    else if(!poster_path.includes('http')) {
+        errors.poster_path = 'Url is incorrect';
     }
 }
 

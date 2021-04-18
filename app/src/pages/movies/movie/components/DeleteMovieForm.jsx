@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { FormContainer, Form, ColoredButton, TransparentButton } from '@globalComponents'
-import { store } from '@store/store';
+import { FormComponent, ColoredButton, TransparentButton } from '@globalComponents'
 import { deleteMovie } from '@store/actionCreators';
+import { connect } from 'react-redux';
 
 const TitleText = styled.div`
     color: white;
@@ -23,22 +23,19 @@ const ButtonContainer = styled.div`
 `
 
 function DeleteMovieForm(props) {    
-    function confirmDelete(event){
-        event.preventDefault();
-        store.dispatch(deleteMovie(props.id));
+    function confirmDelete(){
+        props.dispatch(deleteMovie(props.id));
     }
 
     return (
-        <FormContainer>
-            <Form>
-                <TitleText>DELETE MOVIE</TitleText>
-                <Text>Are you sure you want to delete this movie?</Text>
-                <ButtonContainer>
-                    <TransparentButton onClick={props.close}>RESET</TransparentButton>
-                    <ColoredButton onClick={confirmDelete}>Confirm</ColoredButton>
-                </ButtonContainer>
-            </Form>
-        </FormContainer>
+        <FormComponent>
+            <TitleText>DELETE MOVIE</TitleText>
+            <Text>Are you sure you want to delete this movie?</Text>
+            <ButtonContainer>
+                <TransparentButton onClick={props.close}>RESET</TransparentButton>
+                <ColoredButton onClick={confirmDelete}>Confirm</ColoredButton>
+            </ButtonContainer>
+        </FormComponent>
     )
 }
 
@@ -47,4 +44,4 @@ DeleteMovieForm.propTypes = {
     close: PropTypes.func.isRequired,
 }
 
-export { DeleteMovieForm }
+export default connect()(DeleteMovieForm)

@@ -1,7 +1,7 @@
 import { HeaderComponent } from '@pages/header/components/layouts/HeaderComponent';
 import { TopPanelComponent } from '@pages/header/components/layouts/TopPanelComponent';
 import { Logo, ColoredButton } from '@globalComponents';
-import { AddMovieForm } from '@pages/header/components/AddMovieForm';
+import AddMovieForm from '@pages/header/components/AddMovieForm';
 import { SearchPanelComponent } from '@pages/header/components/layouts/SearchPanelComponent';
 import { SearchText } from '@pages/header/components/SearchText';
 import { SearchInput } from '@pages/header/components/SearchInput';

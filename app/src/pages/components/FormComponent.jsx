@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { VARIABLES } from '@styles/VARIABLES';
 
-const FormContainer = styled.div`
+const Container = styled.div`
     position: fixed;
     width: 100%;
     height: 100%;
@@ -21,4 +21,21 @@ const Form = styled.form`
     padding: 40px;
 `
 
-export { FormContainer, Form }
+function FormComponent(props) {
+    const submitHandler = event => {
+        event.preventDefault();
+        if(props.onSubmit){
+            props.onSubmit(event);
+        }
+    }
+
+    return (
+        <Container>
+            <Form onSubmit={submitHandler}>
+                {props.children}
+            </Form>
+        </Container>
+    )
+}
+
+export { FormComponent }

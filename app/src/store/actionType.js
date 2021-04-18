@@ -1,4 +1,4 @@
-export const actionTypes = {
+export const actionType = {
     GET_MOVIES: 'GET_MOVIES',
     SET_MOVIES: 'SET_MOVIES',
     ADD_MOVIE: 'ADD_MOVIE',
