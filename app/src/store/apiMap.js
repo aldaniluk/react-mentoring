@@ -2,27 +2,26 @@ const globalUrl = 'http://localhost:4000';
 
 let getMoviesUrl = (filter, sorter, asc, search) => {
     let url = globalUrl + '/movies';
-    let useQuestion = true;
 
     filter = filter.toLowerCase();
     if(filter && filter != 'all'){
-        url += `?filter=${filter}`;
-        useQuestion = false;
+        url += getBinder(url) + `filter=${filter}`;
     }
 
     sorter = sorter.toLowerCase();
     if(sorter){
         let sortOrder = asc ? 'asc' : 'desc';
-        url += (useQuestion ? '?' : '&') + `sortBy=${sorter}&sortOrder=${sortOrder}`;
-        useQuestion = false;
+        url += getBinder(url) + `sortBy=${sorter}&sortOrder=${sortOrder}`;
     }
 
     if(search){
-        url += (useQuestion ? '?' : '&') + `search=${search}&searchBy=title`;
+        url += getBinder(url) + `search=${search}&searchBy=title`;
     }
 
     return url;
 }
+
+let getBinder = url => url.includes('?') ? '&' : '?';
 
 let getMovieUrl = id => globalUrl + `/movies/${id}`;
 

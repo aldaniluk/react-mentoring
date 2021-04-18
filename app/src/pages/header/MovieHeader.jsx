@@ -19,7 +19,7 @@ function MovieHeader(props) {
                         <ReturnToSearchPanel />
                     </NavLink>
                 </TopPanelComponent>
-                <MovieDetails id={parseInt(movieId)} />
+                <MovieDetails id={movieId} />
             </GlobalWidthComponent>
         </HeaderComponent>
     )

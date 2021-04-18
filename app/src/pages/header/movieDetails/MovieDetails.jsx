@@ -11,11 +11,12 @@ import { movieSelector } from '@store/selectors';
 import { getMovie } from '@store/actionCreators';
 
 function MovieDetails(props) {
-    const movie = useSelector(movieSelector);
+    let movie = useSelector(movieSelector);
+    let id = parseInt(props.id);
 
     useEffect(() => {
-        props.dispatch(getMovie(props.id));
-    }, [props.id])
+        props.dispatch(getMovie(id));
+    }, [id])
 
     return (
         <MovieDetailsComponent>
@@ -33,7 +34,7 @@ function MovieDetails(props) {
 }
 
 MovieDetails.propTypes = {
-    id: PropTypes.number.isRequired
+    id: PropTypes.string.isRequired
 }
 
 export default connect()(MovieDetails)
