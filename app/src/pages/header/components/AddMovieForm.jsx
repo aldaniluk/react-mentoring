@@ -28,8 +28,8 @@ function AddMovieForm(props) {
     const formik = useFormik({
         initialValues: {
             title: '',
-            releaseDate: '',
-            url: '',
+            release_date: '',
+            poster_path: '',
             genres: '',
             overview: '',
             runtime: ''
