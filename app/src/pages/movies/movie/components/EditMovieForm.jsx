@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { FormContainer, Form, FormOptionName, FormOptionInput, FormOptionDropdown, ColoredButton, TransparentButton, ValidationFormText } from '@globalComponents'
+import { FormComponent, FormOptionName, FormOptionInput, ColoredButton, TransparentButton, ValidationFormText } from '@globalComponents'
 import { VARIABLES } from '@styles/VARIABLES'
-import { store } from '@store/store';
 import { updateMovie } from '@store/actionCreators';
 import { useFormik } from 'formik';
-import { useSelector } from 'react-redux';
 import { formValidator } from '@services/formValidator';
+import { Movie } from '@models';
+import { connect } from 'react-redux';
+import FilterOptions from '@assets/data/FilterOptions';
 
 const TitleText = styled.div`
     color: white;
@@ -30,110 +31,99 @@ const ButtonContainer = styled.div`
 `
 
 function EditMovieForm(props) {  
-    const genres = useSelector(state => state.filter.options);
-    const validate = values => formValidator(values, genres);
+    const validate = values => formValidator(values, FilterOptions);
 
     const formik = useFormik({
         initialValues: {
             title: props.movie.title,
-            releaseDate: props.movie.release_date,
-            url: props.movie.poster_path,
+            release_date: props.movie.release_date,
+            poster_path: props.movie.poster_path,
             genres: props.movie.genres.join(','),
             overview: props.movie.overview,
             runtime: props.movie.runtime.toString()
         },
         validate,
         onSubmit: values => {
-            var movie = {
-                ...props.movie,
-                title: values.title,
-                release_date: values.releaseDate,
-                poster_path: values.url,
-                genres: values.genres.split(','),
-                overview: values.overview,
-                runtime: Number.parseInt(values.runtime)
-            }
+            let movie = new Movie(values.title, values.release_date, values.poster_path, values.genres.split(','), values.overview, Number.parseInt(values.runtime));
+            movie.id = props.movie.id;
 
-            store.dispatch(updateMovie(movie));
+            props.dispatch(updateMovie(movie));
             props.close();
         }
     });
     
     return (
-        <FormContainer>
-            <Form onSubmit={formik.handleSubmit}>
-                <TitleText>EDIT MOVIE</TitleText>
-                <FormOptionName>MOVIE ID</FormOptionName>
-                <OptionValue>{props.movie.id}</OptionValue>
-                <FormOptionName>TITLE</FormOptionName>
-                <FormOptionInput 
-                    id='title'
-                    name='title'
-                    placeholder='Title here' 
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.title} 
-                />
-                {formik.touched.title && formik.errors.title ? <ValidationFormText>{formik.errors.title}</ValidationFormText> : null}
-                <FormOptionName>RELEASE DATE</FormOptionName>
-                <FormOptionInput 
-                    id='releaseDate'
-                    name='releaseDate'
-                    placeholder='Release date here' 
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.releaseDate} 
-                />
-                {formik.touched.releaseDate && formik.errors.releaseDate ? <ValidationFormText>{formik.errors.releaseDate}</ValidationFormText> : null}
-                <FormOptionName>MOVIE URL</FormOptionName>
-                <FormOptionInput 
-                    id='url'
-                    name='url'
-                    placeholder='Url here' 
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.url} 
-                />
-                {formik.touched.url && formik.errors.url ? <ValidationFormText>{formik.errors.url}</ValidationFormText> : null}
-                <FormOptionName>GENRE</FormOptionName>
-                <FormOptionInput 
-                    id='genres'
-                    name='genres'
-                    placeholder='Genres here' 
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.genres} 
-                />
-                {formik.touched.genres && formik.errors.genres ? <ValidationFormText>{formik.errors.genres}</ValidationFormText> : null}
-                <FormOptionName>OVERVIEW</FormOptionName>
-                <FormOptionInput 
-                    id='overview'
-                    name='overview'
-                    placeholder='Overview here' 
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.overview} 
-                />
-                {formik.touched.overview && formik.errors.overview ? <ValidationFormText>{formik.errors.overview}</ValidationFormText> : null}
-                <FormOptionName>RUNTIME</FormOptionName>
-                <FormOptionInput 
-                    id='runtime'
-                    name='runtime'
-                    placeholder='Runtime here' 
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.runtime} 
-                />
-                {formik.touched.runtime && formik.errors.runtime ? <ValidationFormText>{formik.errors.runtime}</ValidationFormText> : null}
-                <ButtonContainer>
-                    <TransparentButton onClick={props.close}>RESET</TransparentButton>
-                    <ColoredButton type='submit'>Save</ColoredButton>
-                </ButtonContainer>
-            </Form>
-        </FormContainer>
+        <FormComponent onSubmit={formik.handleSubmit}>
+            <TitleText>EDIT MOVIE</TitleText>
+            <FormOptionName>MOVIE ID</FormOptionName>
+            <OptionValue>{props.movie.id}</OptionValue>
+            <FormOptionName>TITLE</FormOptionName>
+            <FormOptionInput 
+                id='title'
+                name='title'
+                placeholder='Title here' 
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.title} 
+            />
+            {formik.touched.title && formik.errors.title ? <ValidationFormText>{formik.errors.title}</ValidationFormText> : null}
+            <FormOptionName>RELEASE DATE</FormOptionName>
+            <FormOptionInput 
+                id='release_date'
+                name='release_date'
+                placeholder='Release date here' 
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.release_date} 
+            />
+            {formik.touched.release_date && formik.errors.release_date ? <ValidationFormText>{formik.errors.release_date}</ValidationFormText> : null}
+            <FormOptionName>MOVIE URL</FormOptionName>
+            <FormOptionInput 
+                id='poster_path'
+                name='poster_path'
+                placeholder='Url here' 
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.poster_path} 
+            />
+            {formik.touched.poster_path && formik.errors.poster_path ? <ValidationFormText>{formik.errors.poster_path}</ValidationFormText> : null}
+            <FormOptionName>GENRE</FormOptionName>
+            <FormOptionInput 
+                id='genres'
+                name='genres'
+                placeholder='Genres here' 
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.genres} 
+            />
+            {formik.touched.genres && formik.errors.genres ? <ValidationFormText>{formik.errors.genres}</ValidationFormText> : null}
+            <FormOptionName>OVERVIEW</FormOptionName>
+            <FormOptionInput 
+                id='overview'
+                name='overview'
+                placeholder='Overview here' 
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.overview} 
+            />
+            {formik.touched.overview && formik.errors.overview ? <ValidationFormText>{formik.errors.overview}</ValidationFormText> : null}
+            <FormOptionName>RUNTIME</FormOptionName>
+            <FormOptionInput 
+                id='runtime'
+                name='runtime'
+                placeholder='Runtime here' 
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.runtime} 
+            />
+            {formik.touched.runtime && formik.errors.runtime ? <ValidationFormText>{formik.errors.runtime}</ValidationFormText> : null}
+            <ButtonContainer>
+                <TransparentButton onClick={props.close}>RESET</TransparentButton>
+                <ColoredButton type='submit'>Save</ColoredButton>
+            </ButtonContainer>
+        </FormComponent>
     )
 }
-
 
 EditMovieForm.propTypes = {
     close: PropTypes.func.isRequired,
@@ -148,4 +138,4 @@ EditMovieForm.propTypes = {
     })
 }
 
-export { EditMovieForm }
+export default connect()(EditMovieForm)

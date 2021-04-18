@@ -1,19 +1,19 @@
 import { combineReducers } from 'redux';
-import { actionTypes } from './actionTypes';
+import { actionType } from './actionType';
 import { initialState } from './initialState';
 
 function moviesReducer(state = initialState.movies, action){
     switch(action.type){
-        case actionTypes.GET_MOVIES:
+        case actionType.GET_MOVIES:
             return state;
-        case actionTypes.SET_MOVIES:
-            return action.data;
-        case actionTypes.DELETE_MOVIE:
-            return action.data;
-        case actionTypes.ADD_MOVIE:
-            return action.data;
-        case actionTypes.UPDATE_MOVIE:
-            return action.data;
+        case actionType.SET_MOVIES:
+            return action.payload;
+        case actionType.DELETE_MOVIE:
+            return action.payload;
+        case actionType.ADD_MOVIE:
+            return action.payload;
+        case actionType.UPDATE_MOVIE:
+            return action.payload;
         default:
             return state;
     }
@@ -21,10 +21,10 @@ function moviesReducer(state = initialState.movies, action){
 
 function movieReducer(state = initialState.movies, action){
     switch(action.type){
-        case actionTypes.GET_MOVIE:
+        case actionType.GET_MOVIE:
             return state;
-        case actionTypes.SET_MOVIE:
-            return action.data;
+        case actionType.SET_MOVIE:
+            return action.payload;
         default:
             return state;
     }
@@ -32,10 +32,10 @@ function movieReducer(state = initialState.movies, action){
 
 function filterReducer(state = initialState.filter, action){
     switch(action.type){
-        case actionTypes.SET_FILTER:
+        case actionType.SET_FILTER:
             return {
                 options: state.options,
-                selectedOption: action.data
+                selectedOption: action.payload
             }
         default:
             return state;
@@ -44,11 +44,11 @@ function filterReducer(state = initialState.filter, action){
 
 function sorterReducer(state = initialState.sorter, action){
     switch(action.type){
-        case actionTypes.SET_SORTER:
+        case actionType.SET_SORTER:
             return {
                 options: state.options,
-                selectedOption: action.data.option,
-                asc: action.data.asc
+                selectedOption: action.payload.option,
+                asc: action.payload.asc
             }
         default:
             return state;

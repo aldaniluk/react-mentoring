@@ -8,22 +8,22 @@ import { MoviesCounter } from '@pages/movies/components/MoviesCounter';
 import { NoMovieFound } from '@pages/movies/components/NoMovieFound';
 import { GlobalWidthComponent } from '@globalComponents';
 import { useEffect } from 'react';
-import { store } from '@store/store';
 import { getMovies } from '@store/actionCreators';
-import { useSelector } from 'react-redux';
 import { useLocation } from "react-router-dom";
+import { useSelector, connect } from 'react-redux';
+import { moviesSelector, selectedFilterSelector, selectedSorterSelector, selectedSorterAscSelector } from '@store/selectors';
 
 const useQuery = () => new URLSearchParams(useLocation().search);
 
 function Movies(props) {
-    const movies = useSelector(state => state.movies);
-    const selectedFilterOption = useSelector(state => state.filter.selectedOption);
-    const selectedSorterOption = useSelector(state => state.sorter.selectedOption);
-    const selectedSorterAsc = useSelector(state => state.sorter.asc);
+    const movies = useSelector(moviesSelector);
+    const selectedFilterOption = useSelector(selectedFilterSelector);
+    const selectedSorterOption = useSelector(selectedSorterSelector);
+    const selectedSorterAsc = useSelector(selectedSorterAscSelector);
     const search = useQuery().get('search');
 
     useEffect(() => {
-        store.dispatch(getMovies(search));
+        props.dispatch(getMovies(search));
     }, [selectedFilterOption, selectedSorterOption, selectedSorterAsc, search])
 
     return (
@@ -55,4 +55,4 @@ function Movies(props) {
     )
 }
 
-export { Movies }
+export default connect()(Movies)

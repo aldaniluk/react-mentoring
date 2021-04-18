@@ -1,21 +1,21 @@
 import { FilterListComponent } from '@pages/movies/filter/components/layouts/FilterListComponent';
 import { FilterOption } from '@pages/movies/filter/components/FilterOption';
-import { store } from '@store/store';
 import { setFilterOption } from '@store/actionCreators';
-import { useSelector } from 'react-redux';
+import { useSelector, connect } from 'react-redux';
+import FilterOptions from '@assets/data/FilterOptions';
+import { selectedFilterSelector } from '@store/selectors';
 
-function Filter() {    
-    const options = useSelector(state => state.filter.options);
-    const selectedOption = useSelector(state => state.filter.selectedOption);
+function Filter(props) {    
+    const selectedOption = useSelector(selectedFilterSelector);
 
     function setSelectedOption(option){
-        store.dispatch(setFilterOption(option));
+        props.dispatch(setFilterOption(option));
     }
 
     return (
         <FilterListComponent>
             {
-                options.map(option => (
+                FilterOptions.map(option => (
                     <FilterOption 
                         key={option.id}
                         option={option}
@@ -28,4 +28,4 @@ function Filter() {
     );
 }
 
-export { Filter }
+export default connect()(Filter)

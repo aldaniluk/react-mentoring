@@ -6,15 +6,15 @@ import { MovieDetailsName } from '@pages/header/movieDetails/components/MovieDet
 import { MovieDetailsText } from '@pages/header/movieDetails/components/MovieDetailsText';
 import { MovieDetailsAccentText } from '@pages/header/movieDetails/components/MovieDetailsAccentText';
 import { AgeTimeContainer } from '@pages/header/movieDetails/components/layouts/AgeTimeContainer';
-import { useSelector } from 'react-redux';
-import { store } from '@store/store';
+import { useSelector, connect } from 'react-redux';
+import { movieSelector } from '@store/selectors';
 import { getMovie } from '@store/actionCreators';
 
 function MovieDetails(props) {
-    const movie = useSelector(state => state.movie);
+    const movie = useSelector(movieSelector);
 
     useEffect(() => {
-        store.dispatch(getMovie(props.id));
+        props.dispatch(getMovie(props.id));
     }, [props.id])
 
     return (
@@ -36,4 +36,4 @@ MovieDetails.propTypes = {
     id: PropTypes.number.isRequired
 }
 
-export { MovieDetails }
+export default connect()(MovieDetails)

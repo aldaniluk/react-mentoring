@@ -1,104 +1,69 @@
-import { actionTypes } from './actionTypes';
-
-const globalUrl = 'http://localhost:4000';
+import { actionType } from './actionType';
+import { selectedFilterSelector, selectedSorterSelector, selectedSorterAscSelector } from '@store/selectors';
+import { getMoviesUrl, getMovieUrl, deleteMovieUrl, addMovieUrl, updateMovieUrl } from '@store/apiMap';
+import { apiGetMovies, apiGetMovie, apiDeleteMovie, apiAddMovie, apiUpdateMovie } from '@store/apiRequest/';
 
 function getMovies(search) {
     return (dispatch, getState) => {
-        var url = globalUrl + '/movies';
-        var useQuestion = true;
+        let state = getState();
+        let filter = selectedFilterSelector(state).name;
+        let sorter = selectedSorterSelector(state).field;
+        let asc = selectedSorterAscSelector(state);
 
-        var state = getState();
+        let url = getMoviesUrl(filter, sorter, asc, search);
 
-        var filter = state.filter.selectedOption.name.toLowerCase();
-        if(filter && filter != 'all'){
-            url += `?filter=${filter}`;
-            useQuestion = false;
-        }
-
-        var sorter = state.sorter.selectedOption.field.toLowerCase();
-        if(sorter){
-            var sortOrder = state.sorter.asc ? 'asc' : 'desc';
-            url += (useQuestion ? '?' : '&') + `sortBy=${sorter}&sortOrder=${sortOrder}`;
-            useQuestion = false;
-        }
-
-        if(search){
-            url += (useQuestion ? '?' : '&') + `search=${search}&searchBy=title`;
-        }
-
-        console.log(url);
-
-        fetch(url)
-            .then(res => res.json())
-            .then(res => res.data)
+        apiGetMovies(url)
             .then(res => dispatch({
-                type: actionTypes.SET_MOVIES,
-                data: res
+                type: actionType.SET_MOVIES,
+                payload: res.data
             }))
     }
 }
 
 function getMovie(id){
     return (dispatch, getState) => {
-        var url = globalUrl + `/movies/${id}`;
+        let url = getMovieUrl(id);
 
-        fetch(url)
-            .then(res => res.json())
+        apiGetMovie(url)
             .then(res => dispatch({
-                type: actionTypes.SET_MOVIE,
-                data: res
+                type: actionType.SET_MOVIE,
+                payload: res
             }))
     }
 }
 
 function deleteMovie(id){
     return (dispatch, getState) => {
-        var url = globalUrl + `/movies/${id}`;
-
-        fetch(url, {
-            method: 'DELETE' 
-        })
-        .then(res => dispatch(getMovies));
+        apiDeleteMovie(deleteMovieUrl(id))
+            .then(() => dispatch(getMovies()));
     }
 }
 
 function addMovie(movie){
     return (dispatch, getState) => {
-        var url = globalUrl + `/movies`;
-
-        fetch(url, { 
-            method: 'POST', 
-            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, 
-            body: JSON.stringify(movie) 
-        })
-        .then(res => dispatch(getMovies));
+        apiAddMovie(addMovieUrl(), movie)
+            .then(() => dispatch(getMovies()));
     }
 }
 
 function updateMovie(movie){
     return (dispatch, getState) => {
-        var url = globalUrl + `/movies`;
-
-        fetch(url, { 
-            method: 'PUT', 
-            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, 
-            body: JSON.stringify(movie) 
-        })
-        .then(res => dispatch(getMovies));
+        apiUpdateMovie(updateMovieUrl(), movie)
+            .then(() => dispatch(getMovies()));
     }
 }
 
 function setFilterOption(option){
     return {
-        type: actionTypes.SET_FILTER,
-        data: option
+        type: actionType.SET_FILTER,
+        payload: option
     }
 }
 
 function setSorterOption(option, asc){
     return {
-        type: actionTypes.SET_SORTER,
-        data: { option, asc }
+        type: actionType.SET_SORTER,
+        payload: { option, asc }
     }
 }
 

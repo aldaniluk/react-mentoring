@@ -1,58 +1,14 @@
-const filterOptions = [
-    {
-        "id": 1,
-        "name": "ALL"
-    },
-    {
-        "id": 2,
-        "name": "DRAMA"
-    },
-    {
-        "id": 3,
-        "name": "ADVENTURE"
-    },
-    {
-        "id": 4,
-        "name": "HORROR"
-    },
-    {
-        "id": 5,
-        "name": "THRILLER"
-    },
-    {
-        "id": 6,
-        "name": "CRIME"
-    }
-];
-
-const sorterOptions = [
-    {
-        "id": 1,
-        "name": "RELEASE DATE",
-        "field": "release_date"
-    }, 
-    {
-        "id": 2,
-        "name": "RATING",
-        "field": "vote_average"
-    }, 
-    {
-        "id": 3,
-        "name": "TITLE",
-        "field": "title"
-    }
-];
+import FilterOptions from '@assets/data/FilterOptions';
+import SorterOptions from '@assets/data/SorterOptions';
 
 const initialState = {
     movies: [],
     movie: null,
     filter: {
-        options: filterOptions,
-        selectedOption: filterOptions[0]
+        selectedOption: FilterOptions[0]
     },
     sorter: {
-        options: sorterOptions,
-        selectedOption: sorterOptions[0], 
+        selectedOption: SorterOptions[0], 
         asc: true
     },
 };
