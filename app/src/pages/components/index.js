@@ -8,6 +8,7 @@ import { FormOptionDropdown } from './FormOptionDropdown'
 import { TransparentButton } from './TransparentButton'
 import { ColoredButton } from './ColoredButton'
 import { SemitransparentButton } from './SemitransparentButton'
+import { AppContainer } from './AppContainer'
 
 export {
     ErrorBoundary,
@@ -20,4 +21,5 @@ export {
     TransparentButton,
     ColoredButton,
     SemitransparentButton,
+    AppContainer,
 }

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { VARIABLES } from '@styles/VARIABLES';
 
-const Container = styled.form`
+const Container = styled.div`
     position: fixed;
     width: 100%;
     height: 100%;
@@ -15,16 +15,20 @@ const Container = styled.form`
     z-index: 100;
 `
 
-const Form = styled.div`
+const Form = styled.form`
     width: 40%;
     background: ${VARIABLES.darkgrey};
     padding: 40px;
 `
 
 function FormComponent(props) {
+    const submitHandler = event => {
+        event.preventDefault();
+    }
+
     return (
         <Container>
-            <Form>
+            <Form onSubmit={submitHandler}>
                 {props.children}
             </Form>
         </Container>

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useState, useCallback } from 'react';
-import { EditMovieForm } from '@pages/movies/movie/components/EditMovieForm';
-import { DeleteMovieForm } from '@pages/movies/movie/components/DeleteMovieForm';
+import EditMovieForm from '@pages/movies/movie/components/EditMovieForm';
+import DeleteMovieForm from '@pages/movies/movie/components/DeleteMovieForm';
 import { MovieDescription } from '@pages/movies/movie/components/MovieDescription';
 import { MovieComponent } from '@pages/movies/movie/components/layouts/MovieComponent';
 import { EditDeleteOptions } from '@pages/movies/movie/components/EditDeleteOptions';

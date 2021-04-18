@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { FormComponent, FormOptionName, FormOptionInput, FormOptionDropdown, ColoredButton, TransparentButton } from '@globalComponents'
+import { FormComponent, FormOptionName, FormOptionInput, ColoredButton, TransparentButton } from '@globalComponents'
 import { VARIABLES } from '@styles/VARIABLES'
-import { useState, useEffect } from 'react'
-import { store } from '@store/store';
+import { useState, useCallback } from 'react'
 import { updateMovie } from '@store/actionCreators';
+import { Movie } from '@models';
+import { connect } from 'react-redux';
 
 const TitleText = styled.div`
     color: white;
@@ -35,19 +36,18 @@ function EditMovieForm(props) {
     const [overview, setOverview] = useState(props.movie.overview);
     const [runtime, setRuntime] = useState(props.movie.runtime);
 
-    function confirmUpdate(event){
-        event.preventDefault();
-        var movie = {
-            ...props.movie,
-            title: title,
-            release_date: release_date,
-            poster_path: poster_path,
-            genres: genres.split(','),
-            overview: overview,
-            runtime: Number.parseInt(runtime)
-        }
+    const handleEditTitle = useCallback(event => setTitle(event.target.value), []);
+    const handleEditReleaseDate = useCallback(event => setReleaseDate(event.target.value), []);
+    const handleEditUrl = useCallback(event => setUrl(event.target.value), []);
+    const handleEditGenres = useCallback(event => setGenres(event.target.value), []);
+    const handleEditOverview = useCallback(event => setOverview(event.target.value), []);
+    const handleEditRuntime = useCallback(event => setRuntime(event.target.value), []);
 
-        store.dispatch(updateMovie(movie));
+    function confirmUpdate(){
+        let movie = new Movie(title, release_date, poster_path, genres.split(','), overview, Number.parseInt(runtime));
+        movie.id = props.movie.id;
+
+        props.dispatch(updateMovie(movie));
         props.close();
     }
     
@@ -57,28 +57,17 @@ function EditMovieForm(props) {
             <FormOptionName>MOVIE ID</FormOptionName>
             <OptionValue>{props.movie.id}</OptionValue>
             <FormOptionName>TITLE</FormOptionName>
-            <FormOptionInput defaultValue={title} onChange={event => setTitle(event.target.value)} />
+            <FormOptionInput defaultValue={title} onChange={handleEditTitle} />
             <FormOptionName>RELEASE DATE</FormOptionName>
-            <FormOptionInput defaultValue={release_date} onChange={event => setReleaseDate(event.target.value)} />
+            <FormOptionInput defaultValue={release_date} onChange={handleEditReleaseDate} />
             <FormOptionName>MOVIE URL</FormOptionName>
-            <FormOptionInput defaultValue={poster_path} onChange={event => setUrl(event.target.value)} />
+            <FormOptionInput defaultValue={poster_path} onChange={handleEditUrl} />
             <FormOptionName>GENRE</FormOptionName>
-            <FormOptionInput defaultValue={genres} onChange={event => setGenres(event.target.value)} />
-            {/* Let's forget about dropdown for a while
-             <FormOptionDropdown defaultValue={props.movie.genres.join()}>
-                {
-                    genres.map(genre => (
-                            <option key={genre.id} value={genre.name}>
-                                {genre.name}
-                            </option>
-                        )
-                    )
-                }
-            </FormOptionDropdown> */}
+            <FormOptionInput defaultValue={genres} onChange={handleEditGenres} />
             <FormOptionName>OVERVIEW</FormOptionName>
-            <FormOptionInput defaultValue={overview} onChange={event => setOverview(event.target.value)} />
+            <FormOptionInput defaultValue={overview} onChange={handleEditOverview} />
             <FormOptionName>RUNTIME</FormOptionName>
-            <FormOptionInput defaultValue={runtime} onChange={event => setRuntime(event.target.value)} />
+            <FormOptionInput defaultValue={runtime} onChange={handleEditRuntime} />
             <ButtonContainer>
                 <TransparentButton onClick={props.close}>RESET</TransparentButton>
                 <ColoredButton onClick={confirmUpdate}>Save</ColoredButton>
@@ -101,4 +90,4 @@ EditMovieForm.propTypes = {
     })
 }
 
-export { EditMovieForm }
+export default connect()(EditMovieForm)

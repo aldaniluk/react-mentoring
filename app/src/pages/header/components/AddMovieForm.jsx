@@ -1,9 +1,10 @@
 import styled from 'styled-components';
-import { FormComponent, FormOptionName, FormOptionInput, FormOptionDropdown, ColoredButton, TransparentButton } from '@globalComponents'
-import { useState, useEffect } from 'react'
-import { store } from '@store/store';
+import { FormComponent, FormOptionName, FormOptionInput, ColoredButton, TransparentButton } from '@globalComponents'
+import { useState, useCallback } from 'react'
 import { addMovie } from '@store/actionCreators';
 import React from 'react';
+import { Movie } from '@models';
+import { connect } from 'react-redux';
 
 const Title = styled.div`
     color: white;
@@ -21,24 +22,22 @@ const ColoredButtonWrapper = styled(ColoredButton)`
 
 function AddMovieForm(props) {
     const [title, setTitle] = useState('');
-    const [releaseDate, setReleaseDate] = useState('');
-    const [url, setUrl] = useState('');
+    const [release_date, setReleaseDate] = useState('');
+    const [poster_path, setUrl] = useState('');
     const [genres, setGenres] = useState('');
     const [overview, setOverview] = useState('');
     const [runtime, setRuntime] = useState(0);
 
-    function confirmAdd(event){
-        event.preventDefault();
-        var movie = {
-            title: title,
-            release_date: releaseDate,
-            poster_path: url,
-            genres: genres.split(','),
-            overview: overview,
-            runtime: Number.parseInt(runtime)
-        }
+    const handleAddTitle = useCallback(event => setTitle(event.target.value), []);
+    const handleAddReleaseDate = useCallback(event => setReleaseDate(event.target.value), []);
+    const handleAddUrl = useCallback(event => setUrl(event.target.value), []);
+    const handleAddGenres = useCallback(event => setGenres(event.target.value), []);
+    const handleAddOverview = useCallback(event => setOverview(event.target.value), []);
+    const handleAddRuntime = useCallback(event => setRuntime(event.target.value), []);
 
-        store.dispatch(addMovie(movie));
+    function confirmAdd(){
+        let movie = new Movie(title, release_date, poster_path, genres.split(','), overview, Number.parseInt(runtime));
+        props.dispatch(addMovie(movie));
         props.close();
     }
 
@@ -46,27 +45,17 @@ function AddMovieForm(props) {
         <FormComponent>
             <Title>ADD MOVIE</Title>
             <FormOptionName>TITLE</FormOptionName>
-            <FormOptionInput placeholder='Title here' onChange={event => setTitle(event.target.value)} />
+            <FormOptionInput placeholder='Title here' onChange={handleAddTitle} />
             <FormOptionName>RELEASE DATE</FormOptionName>
-            <FormOptionInput placeholder='Release date here' onChange={event => setReleaseDate(event.target.value)} />
+            <FormOptionInput placeholder='Release date here' onChange={handleAddReleaseDate} />
             <FormOptionName>MOVIE URL</FormOptionName>
-            <FormOptionInput placeholder='Movie URL here' onChange={event => setUrl(event.target.value)} />
+            <FormOptionInput placeholder='Movie URL here' onChange={handleAddUrl} />
             <FormOptionName>GENRES</FormOptionName>
-            <FormOptionInput placeholder='Genres here' onChange={event => setGenres(event.target.value)} />
-            {/* <FormOptionDropdown>
-                {
-                    genres.map(genre => (
-                            <option key={genre.id}>
-                                {genre.name}
-                            </option>
-                        )
-                    )
-                }
-            </FormOptionDropdown> */}
+            <FormOptionInput placeholder='Genres here' onChange={handleAddGenres} />
             <FormOptionName>OVERVIEW</FormOptionName>
-            <FormOptionInput placeholder='Overview here' onChange={event => setOverview(event.target.value)} />
+            <FormOptionInput placeholder='Overview here' onChange={handleAddOverview} />
             <FormOptionName>RUNTIME</FormOptionName>
-            <FormOptionInput placeholder='Runtime here' onChange={event => setRuntime(event.target.value)} />
+            <FormOptionInput placeholder='Runtime here' onChange={handleAddRuntime} />
             <ButtonContainer>
                 <TransparentButton onClick={props.close}>RESET</TransparentButton>
                 <ColoredButtonWrapper onClick={confirmAdd}>SUBMIT</ColoredButtonWrapper>
@@ -75,4 +64,4 @@ function AddMovieForm(props) {
     )
 }
 
-export { AddMovieForm }
+export default connect()(AddMovieForm)

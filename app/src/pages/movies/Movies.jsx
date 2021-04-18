@@ -7,18 +7,18 @@ import { MoviesListComponent } from '@pages/movies/components/layouts/MoviesList
 import { MoviesCounter } from '@pages/movies/components/MoviesCounter';
 import { GlobalWidthComponent } from '@globalComponents';
 import { useEffect } from 'react';
-import { store } from '@store/store';
 import { getMovies } from '@store/actionCreators';
-import { useSelector } from 'react-redux';
+import { useSelector, connect } from 'react-redux';
+import { moviesSelector, selectedFilterSelector, selectedSorterSelector, selectedSorterAscSelector } from '@store/selectors';
 
 function Movies(props) {
-    const movies = useSelector(state => state.movies);
-    const selectedFilterOption = useSelector(state => state.filter.selectedOption);
-    const selectedSorterOption = useSelector(state => state.sorter.selectedOption);
-    const selectedSorterAsc = useSelector(state => state.sorter.asc);
+    const movies = useSelector(moviesSelector);
+    const selectedFilterOption = useSelector(selectedFilterSelector);
+    const selectedSorterOption = useSelector(selectedSorterSelector);
+    const selectedSorterAsc = useSelector(selectedSorterAscSelector);
 
     useEffect(() => {
-        store.dispatch(getMovies);
+        props.dispatch(getMovies());
     }, [selectedFilterOption, selectedSorterOption, selectedSorterAsc])
 
     return (
@@ -45,4 +45,4 @@ function Movies(props) {
     )
 }
 
-export { Movies }
+export default connect()(Movies)
