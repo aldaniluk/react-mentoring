@@ -44,10 +44,6 @@ it('AddMovieForm UI testing', () => {
 
     let resetButton = screen.queryByText('RESET')
     expect(resetButton).toBeInTheDocument();
-
-    // fireEvent.submit(form, {
-    //     preventDefault: 
-    // })
 });
 
 let titleCorrectValue = 'Some Movie';
