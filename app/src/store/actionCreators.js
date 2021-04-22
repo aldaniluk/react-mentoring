@@ -1,7 +1,7 @@
 import { actionType } from './actionType';
 import { selectedFilterSelector, selectedSorterSelector, selectedSorterAscSelector } from '@store/selectors';
 import { getMoviesUrl, getMovieUrl, deleteMovieUrl, addMovieUrl, updateMovieUrl } from '@store/apiMap';
-import { apiGetMovies, apiGetMovie, apiDeleteMovie, apiAddMovie, apiUpdateMovie } from '@store/apiRequest/';
+import { apiGetMovies, apiGetMovie, apiDeleteMovie, apiAddMovie, apiUpdateMovie } from '@store/apiRequest';
 
 function getMovies(search) {
     return (dispatch, getState) => {
