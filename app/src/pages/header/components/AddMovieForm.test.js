@@ -2,6 +2,7 @@ import React from 'react';
 import { AddMovieForm } from './AddMovieForm.jsx';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
+import { Movie } from '@models';
 
 it('AddMovieForm UI testing', () => {
     render(<AddMovieForm />);
@@ -59,10 +60,10 @@ let setInput = (inputTitle, value) => {
 } 
 
 it('AddMovieForm happy path testing', async () => {
-    let onSubmitDispatch = jest.fn();
+    let onSubmitAddMovie = jest.fn();
     let onSubmitClose = jest.fn();
 
-    render(<AddMovieForm dispatch={onSubmitDispatch} close={onSubmitClose} />);
+    render(<AddMovieForm addMovie={onSubmitAddMovie} close={onSubmitClose} />);
 
     setInput('title', titleCorrectValue);
     setInput('release_date', releaseDateCorrectValue);
@@ -75,15 +76,17 @@ it('AddMovieForm happy path testing', async () => {
 
     fireEvent.click(submitButton);
 
-    await waitFor(() => expect(onSubmitDispatch).toBeCalled());
+    let movie = new Movie(titleCorrectValue, releaseDateCorrectValue, posterPathCorrectValue, genresCorrectValue.split(','), overviewCorrectValue, Number.parseInt(runtimeCorrectValue));
+
+    await waitFor(() => expect(onSubmitAddMovie).toHaveBeenCalledWith(movie));
     await waitFor(() => expect(onSubmitClose).toBeCalled());
 });
 
 let checkInput = async (input, value, errorText) => {
-    let onSubmitDispatch = jest.fn();
+    let onSubmitAddMovie = jest.fn();
     let onSubmitClose = jest.fn();
 
-    render(<AddMovieForm dispatch={onSubmitDispatch} close={onSubmitClose} />);
+    render(<AddMovieForm addMovie={onSubmitAddMovie} close={onSubmitClose} />);
 
     if(input != 'title'){
         setInput('title', titleCorrectValue);
@@ -133,7 +136,7 @@ let checkInput = async (input, value, errorText) => {
 
     let error = await screen.findByText(errorText);
     expect(error).toBeInTheDocument();
-    expect(onSubmitDispatch).not.toBeCalled();
+    expect(onSubmitAddMovie).not.toBeCalled();
     expect(onSubmitClose).not.toBeCalled();
 }
 

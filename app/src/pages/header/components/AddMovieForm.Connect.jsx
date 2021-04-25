@@ -1,4 +1,11 @@
 import { connect } from 'react-redux';
 import { AddMovieForm } from './AddMovieForm';
+import { addMovie } from '@store/actionCreators';
 
-export default connect()(AddMovieForm)
+let mapDispatchToProps = (dispatch) => {
+    return {
+        addMovie: movie => dispatch(addMovie(movie)),
+    }
+}
+
+export default connect(null, mapDispatchToProps)(AddMovieForm)

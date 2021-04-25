@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { FormComponent, FormOptionName, FormOptionInput, ColoredButton, TransparentButton, ValidationFormText } from '@globalComponents'
-import { addMovie } from '@store/actionCreators';
 import React from 'react';
 import { useFormik } from 'formik';
 import { formValidator } from '@services/formValidator';
@@ -37,7 +36,7 @@ function AddMovieForm(props) {
         onSubmit: values => {
             let movie = new Movie(values.title, values.release_date, values.poster_path, values.genres.split(','), values.overview, Number.parseInt(values.runtime));
 
-            props.dispatch(addMovie(movie));
+            props.addMovie(movie);
             props.close();
         }
     });
