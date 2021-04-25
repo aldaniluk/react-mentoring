@@ -12,7 +12,7 @@ function getMovies(search) {
 
         let url = getMoviesUrl(filter, sorter, asc, search);
 
-        apiGetMovies(url)
+        return apiGetMovies(url)
             .then(res => dispatch({
                 type: actionType.SET_MOVIES,
                 payload: res.data
@@ -34,21 +34,21 @@ function getMovie(id){
 
 function deleteMovie(id){
     return (dispatch, getState) => {
-        apiDeleteMovie(deleteMovieUrl(id))
+        return apiDeleteMovie(deleteMovieUrl(id))
             .then(() => dispatch(getMovies()));
     }
 }
 
 function addMovie(movie){
     return (dispatch, getState) => {
-        apiAddMovie(addMovieUrl(), movie)
+        return apiAddMovie(addMovieUrl(), movie)
             .then(() => dispatch(getMovies()));
     }
 }
 
 function updateMovie(movie){
     return (dispatch, getState) => {
-        apiUpdateMovie(updateMovieUrl(), movie)
+        return apiUpdateMovie(updateMovieUrl(), movie)
             .then(() => dispatch(getMovies()));
     }
 }
