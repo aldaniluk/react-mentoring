@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddMovieForm AddMovieForm UI testing 1`] = `
+<DocumentFragment>
+  <div
+    class="sc-eCssSg cqcqLB"
+  >
+    <form
+      class="sc-jSgupP QSFhL"
+    >
+      <div
+        class="sc-khAkjo iZFSjE"
+      >
+        ADD MOVIE
+      </div>
+      <div
+        class="sc-gKsewC eXvkrr"
+      >
+        TITLE
+      </div>
+      <input
+        class="sc-iBPRYJ ddlvwJ"
+        id="title"
+        name="title"
+        placeholder="Title here"
+        title="title"
+        value=""
+      />
+      <div
+        class="sc-gKsewC eXvkrr"
+      >
+        RELEASE DATE
+      </div>
+      <input
+        class="sc-iBPRYJ ddlvwJ"
+        id="release_date"
+        name="release_date"
+        placeholder="Release date here"
+        title="release_date"
+        value=""
+      />
+      <div
+        class="sc-gKsewC eXvkrr"
+      >
+        MOVIE URL
+      </div>
+      <input
+        class="sc-iBPRYJ ddlvwJ"
+        id="poster_path"
+        name="poster_path"
+        placeholder="Url here"
+        title="poster_path"
+        value=""
+      />
+      <div
+        class="sc-gKsewC eXvkrr"
+      >
+        GENRES
+      </div>
+      <input
+        class="sc-iBPRYJ ddlvwJ"
+        id="genres"
+        name="genres"
+        placeholder="Genres here"
+        title="genres"
+        value=""
+      />
+      <div
+        class="sc-gKsewC eXvkrr"
+      >
+        OVERVIEW
+      </div>
+      <input
+        class="sc-iBPRYJ ddlvwJ"
+        id="overview"
+        name="overview"
+        placeholder="Overview here"
+        title="overview"
+        value=""
+      />
+      <div
+        class="sc-gKsewC eXvkrr"
+      >
+        RUNTIME
+      </div>
+      <input
+        class="sc-iBPRYJ ddlvwJ"
+        id="runtime"
+        name="runtime"
+        placeholder="Runtime here"
+        title="runtime"
+        value=""
+      />
+      <div
+        class="sc-hTZhsR Kjldg"
+      >
+        <button
+          class="sc-pFZIQ hJcOwJ"
+        >
+          RESET
+        </button>
+        <button
+          class="sc-jrAGrp sc-jgHCyG jccncV idCPzI"
+          type="submit"
+        >
+          SUBMIT
+        </button>
+      </div>
+    </form>
+  </div>
+</DocumentFragment>
+`;

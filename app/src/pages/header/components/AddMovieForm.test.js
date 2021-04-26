@@ -4,85 +4,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { Movie } from '@models';
 
-it('AddMovieForm UI testing', () => {
-    render(<AddMovieForm />);
-
-    let header = screen.queryByText('ADD MOVIE')
-    expect(header).toBeInTheDocument();
-
-    let titleLabel = screen.queryByText('TITLE')
-    expect(titleLabel).toBeInTheDocument();
-    let titleInput = screen.getByTitle('title');
-    expect(titleInput).toBeInTheDocument();
-
-    let releaseDateLabel = screen.queryByText('RELEASE DATE')
-    expect(releaseDateLabel).toBeInTheDocument();
-    let releaseDateInput = screen.getByTitle('release_date');
-    expect(releaseDateInput).toBeInTheDocument();
-
-    let posterPathLabel = screen.queryByText('MOVIE URL')
-    expect(posterPathLabel).toBeInTheDocument();
-    let posterPathInput = screen.getByTitle('poster_path');
-    expect(posterPathInput).toBeInTheDocument();
-
-    let genresLabel = screen.queryByText('GENRES')
-    expect(genresLabel).toBeInTheDocument();
-    let genresInput = screen.getByTitle('genres');
-    expect(genresInput).toBeInTheDocument();
-
-    let overviewLabel = screen.queryByText('OVERVIEW')
-    expect(overviewLabel).toBeInTheDocument();
-    let overviewInput = screen.getByTitle('overview');
-    expect(overviewInput).toBeInTheDocument();
-
-    let runtimeLabel = screen.queryByText('RUNTIME')
-    expect(runtimeLabel).toBeInTheDocument();
-    let runtimeInput = screen.getByTitle('runtime');
-    expect(runtimeInput).toBeInTheDocument();
-
-    let submitButton = screen.queryByText('SUBMIT')
-    expect(submitButton).toBeInTheDocument();
-
-    let resetButton = screen.queryByText('RESET')
-    expect(resetButton).toBeInTheDocument();
-});
-
-let titleCorrectValue = 'Some Movie';
-let releaseDateCorrectValue = '2021-01-01';
-let posterPathCorrectValue = 'http://some_url';
-let genresCorrectValue = 'Crime,Horror';
-let overviewCorrectValue = 'Some overview';
-let runtimeCorrectValue = '123';
-
-let setInput = (inputTitle, value) => {
-    let input = screen.getByTitle(inputTitle);
-    fireEvent.change(input, { target: { value: value } });
-} 
-
-it('AddMovieForm happy path testing', async () => {
-    let onSubmitAddMovie = jest.fn();
-    let onSubmitClose = jest.fn();
-
-    render(<AddMovieForm addMovie={onSubmitAddMovie} close={onSubmitClose} />);
-
-    setInput('title', titleCorrectValue);
-    setInput('release_date', releaseDateCorrectValue);
-    setInput('poster_path', posterPathCorrectValue);
-    setInput('genres', genresCorrectValue);
-    setInput('overview', overviewCorrectValue);
-    setInput('runtime', runtimeCorrectValue);
-
-    let submitButton = screen.queryByText('SUBMIT');
-
-    fireEvent.click(submitButton);
-
-    let movie = new Movie(titleCorrectValue, releaseDateCorrectValue, posterPathCorrectValue, genresCorrectValue.split(','), overviewCorrectValue, Number.parseInt(runtimeCorrectValue));
-
-    await waitFor(() => expect(onSubmitAddMovie).toHaveBeenCalledWith(movie));
-    await waitFor(() => expect(onSubmitClose).toBeCalled());
-});
-
-let checkInput = async (input, value, errorText) => {
+const checkInput = async (input, value, errorText) => {
     let onSubmitAddMovie = jest.fn();
     let onSubmitClose = jest.fn();
 
@@ -140,35 +62,78 @@ let checkInput = async (input, value, errorText) => {
     expect(onSubmitClose).not.toBeCalled();
 }
 
-it('AddMovieForm Title input testing: value is required', 
-    () => checkInput('title', null, 'Title is required'));
+const titleCorrectValue = 'Some Movie';
+const releaseDateCorrectValue = '2021-01-01';
+const posterPathCorrectValue = 'http://some_url';
+const genresCorrectValue = 'Crime,Horror';
+const overviewCorrectValue = 'Some overview';
+const runtimeCorrectValue = '123';
 
-it('AddMovieForm Release date input testing: value is required', 
-    () => checkInput('release_date', null, 'Release date is required'));
+const setInput = (inputTitle, value) => {
+    let input = screen.getByTitle(inputTitle);
+    fireEvent.change(input, { target: { value: value } });
+} 
 
-it('AddMovieForm Release date input testing: value is incorrect', 
-    () => checkInput('release_date', 'incorrect value', 'Release date must be in format yyyy-mm-dd'));
+describe('AddMovieForm', () => {
+    it('AddMovieForm UI testing', () => {
+        const { asFragment } = render(<AddMovieForm />);
 
-it('AddMovieForm Url input testing: value is required', 
-    () => checkInput('poster_path', null, 'Url is required'));
+        expect(asFragment()).toMatchSnapshot();
+    });
 
-it('AddMovieForm Url input testing: value is incorrect', 
-    () => checkInput('poster_path', 'incorrect value', 'Url is incorrect'));
+    it('AddMovieForm happy path testing', async () => {
+        let onSubmitAddMovie = jest.fn();
+        let onSubmitClose = jest.fn();
 
-it('AddMovieForm Genres input testing: value is required', 
-    () => checkInput('genres', null, 'Genres are required'));
+        render(<AddMovieForm addMovie={onSubmitAddMovie} close={onSubmitClose} />);
 
-it('AddMovieForm Genres input testing: value is incorrect', 
-    () => checkInput('genres', 'Crime,Horro1', 'Some of genres are incorrect'));
+        setInput('title', titleCorrectValue);
+        setInput('release_date', releaseDateCorrectValue);
+        setInput('poster_path', posterPathCorrectValue);
+        setInput('genres', genresCorrectValue);
+        setInput('overview', overviewCorrectValue);
+        setInput('runtime', runtimeCorrectValue);
 
-it('AddMovieForm Overview input testing: value is required', 
-    () => checkInput('overview', null, 'Overview is required'));
+        let submitButton = screen.queryByText('SUBMIT');
 
-it('AddMovieForm Runtime input testing: value is required', 
-    () => checkInput('runtime', null, 'Runtime is required'));
+        fireEvent.click(submitButton);
 
-it('AddMovieForm Runtime input testing: value is incorrect (!=integer)', 
-    () => checkInput('runtime', 'text', 'Runtime must be an integer'));
+        let movie = new Movie(titleCorrectValue, releaseDateCorrectValue, posterPathCorrectValue, genresCorrectValue.split(','), overviewCorrectValue, Number.parseInt(runtimeCorrectValue));
 
-it('AddMovieForm Runtime input testing: value is incorrect (==0)', 
-    () => checkInput('runtime', '0', 'Runtime must be greater that 0'));
+        await waitFor(() => expect(onSubmitAddMovie).toHaveBeenCalledWith(movie));
+        await waitFor(() => expect(onSubmitClose).toBeCalled());
+    });
+
+    it('AddMovieForm Title input testing: value is required', 
+        () => checkInput('title', null, 'Title is required'));
+
+    it('AddMovieForm Release date input testing: value is required', 
+        () => checkInput('release_date', null, 'Release date is required'));
+
+    it('AddMovieForm Release date input testing: value is incorrect', 
+        () => checkInput('release_date', 'incorrect value', 'Release date must be in format yyyy-mm-dd'));
+
+    it('AddMovieForm Url input testing: value is required', 
+        () => checkInput('poster_path', null, 'Url is required'));
+
+    it('AddMovieForm Url input testing: value is incorrect', 
+        () => checkInput('poster_path', 'incorrect value', 'Url is incorrect'));
+
+    it('AddMovieForm Genres input testing: value is required', 
+        () => checkInput('genres', null, 'Genres are required'));
+
+    it('AddMovieForm Genres input testing: value is incorrect', 
+        () => checkInput('genres', 'Crime,Horro1', 'Some of genres are incorrect'));
+
+    it('AddMovieForm Overview input testing: value is required', 
+        () => checkInput('overview', null, 'Overview is required'));
+
+    it('AddMovieForm Runtime input testing: value is required', 
+        () => checkInput('runtime', null, 'Runtime is required'));
+
+    it('AddMovieForm Runtime input testing: value is incorrect (!=integer)', 
+        () => checkInput('runtime', 'text', 'Runtime must be an integer'));
+
+    it('AddMovieForm Runtime input testing: value is incorrect (==0)', 
+        () => checkInput('runtime', '0', 'Runtime must be greater that 0'));
+})
