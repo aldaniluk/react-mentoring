@@ -52,7 +52,7 @@ function EditMovieForm(props) {
     }
     
     return (
-        <FormComponent>
+        <FormComponent onSubmit={confirmUpdate}>
             <TitleText>EDIT MOVIE</TitleText>
             <FormOptionName>MOVIE ID</FormOptionName>
             <OptionValue>{props.movie.id}</OptionValue>
@@ -70,7 +70,7 @@ function EditMovieForm(props) {
             <FormOptionInput defaultValue={runtime} onChange={handleEditRuntime} />
             <ButtonContainer>
                 <TransparentButton onClick={props.close}>RESET</TransparentButton>
-                <ColoredButton onClick={confirmUpdate}>Save</ColoredButton>
+                <ColoredButton>Save</ColoredButton>
             </ButtonContainer>
         </FormComponent>
     )

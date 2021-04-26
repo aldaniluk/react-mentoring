@@ -42,7 +42,7 @@ function AddMovieForm(props) {
     }
 
     return (
-        <FormComponent>
+        <FormComponent onSubmit={confirmAdd}>
             <Title>ADD MOVIE</Title>
             <FormOptionName>TITLE</FormOptionName>
             <FormOptionInput placeholder='Title here' onChange={handleAddTitle} />
@@ -58,7 +58,7 @@ function AddMovieForm(props) {
             <FormOptionInput placeholder='Runtime here' onChange={handleAddRuntime} />
             <ButtonContainer>
                 <TransparentButton onClick={props.close}>RESET</TransparentButton>
-                <ColoredButtonWrapper onClick={confirmAdd}>SUBMIT</ColoredButtonWrapper>
+                <ColoredButtonWrapper>SUBMIT</ColoredButtonWrapper>
             </ButtonContainer>
         </FormComponent>
     )
