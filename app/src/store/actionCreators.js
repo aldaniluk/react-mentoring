@@ -1,7 +1,7 @@
 import { actionType } from './actionType';
 import { selectedFilterSelector, selectedSorterSelector, selectedSorterAscSelector } from '@store/selectors';
 import { getMoviesUrl, getMovieUrl, deleteMovieUrl, addMovieUrl, updateMovieUrl } from '@store/apiMap';
-import { apiGetMovies, apiGetMovie, apiDeleteMovie, apiAddMovie, apiUpdateMovie } from '@store/apiRequest/';
+import { apiGet, apiDelete, apiAdd, apiUpdate } from '@store/apiRequest/';
 
 function getMovies(search) {
     return (dispatch, getState) => {
@@ -12,7 +12,7 @@ function getMovies(search) {
 
         let url = getMoviesUrl(filter, sorter, asc, search);
 
-        apiGetMovies(url)
+        apiGet(url)
             .then(res => dispatch({
                 type: actionType.SET_MOVIES,
                 payload: res.data
@@ -24,7 +24,7 @@ function getMovie(id){
     return (dispatch, getState) => {
         let url = getMovieUrl(id);
 
-        apiGetMovie(url)
+        apiGet(url)
             .then(res => dispatch({
                 type: actionType.SET_MOVIE,
                 payload: res
@@ -34,21 +34,21 @@ function getMovie(id){
 
 function deleteMovie(id){
     return (dispatch, getState) => {
-        apiDeleteMovie(deleteMovieUrl(id))
+        apiDelete(deleteMovieUrl(id))
             .then(() => dispatch(getMovies()));
     }
 }
 
 function addMovie(movie){
     return (dispatch, getState) => {
-        apiAddMovie(addMovieUrl(), movie)
+        apiAdd(addMovieUrl(), movie)
             .then(() => dispatch(getMovies()));
     }
 }
 
 function updateMovie(movie){
     return (dispatch, getState) => {
-        apiUpdateMovie(updateMovieUrl(), movie)
+        apiUpdate(updateMovieUrl(), movie)
             .then(() => dispatch(getMovies()));
     }
 }

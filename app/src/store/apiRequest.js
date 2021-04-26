@@ -1,33 +1,28 @@
-let apiGetMovies = url => {
+let apiGet = url => {
     return fetch(url)
         .then(res => res.json());
 }
 
-let apiGetMovie = url => {
-    return fetch(url)
-        .then(res => res.json());
-}
-
-let apiDeleteMovie = url => {
+let apiDelete = url => {
     return fetch(url, {
         method: 'DELETE' 
     });
 }
 
-let apiAddMovie = (url, movie) => {
+let apiAdd = (url, object) => {
     return fetch(url, { 
         method: 'POST', 
         headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, 
-        body: JSON.stringify(movie) 
+        body: JSON.stringify(object) 
     })
 }
 
-let apiUpdateMovie = (url, movie) => {
+let apiUpdate = (url, object) => {
     return fetch(url, { 
         method: 'PUT', 
         headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, 
-        body: JSON.stringify(movie) 
+        body: JSON.stringify(object) 
     })
 }
 
-export { apiGetMovies, apiGetMovie, apiDeleteMovie, apiAddMovie, apiUpdateMovie }
+export { apiGet, apiDelete, apiAdd, apiUpdate }

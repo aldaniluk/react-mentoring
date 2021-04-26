@@ -15,7 +15,7 @@ function MovieDetails(props) {
     let id = parseInt(props.id);
 
     useEffect(() => {
-        props.dispatch(getMovie(id));
+        props.getMovie(id);
     }, [id])
 
     return (
@@ -37,4 +37,4 @@ MovieDetails.propTypes = {
     id: PropTypes.string.isRequired
 }
 
-export default connect()(MovieDetails)
+export default connect(null, { getMovie })(MovieDetails)

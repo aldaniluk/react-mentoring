@@ -34,18 +34,13 @@ function Movies(props) {
                     <Sorter />
                 </FilterSorterTopPanelComponent>
                 {
-                movies.length == 0 
+                movies.length === 0 
                     ? <NoMovieFound />
                     : <>
                         <MoviesCounter count={movies.length} />
                         <MoviesListComponent>
                         {
-                            movies.map(movie => {
-                                return (<Movie 
-                                    key={movie.id}
-                                    movie={movie}
-                                />
-                            )})
+                            movies.map(movie => <Movie key={movie.id} movie={movie} />)
                         }
                         </MoviesListComponent>
                     </>
