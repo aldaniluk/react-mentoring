@@ -35,21 +35,21 @@ function getMovie(id){
 function deleteMovie(id){
     return (dispatch, getState) => {
         return apiDeleteMovie(deleteMovieUrl(id))
-            .then(() => dispatch(getMovies()));
+            .then(() => getMovies()(dispatch, getState));
     }
 }
 
 function addMovie(movie){
     return (dispatch, getState) => {
         return apiAddMovie(addMovieUrl(), movie)
-            .then(() => dispatch(getMovies()));
+            .then(() => getMovies()(dispatch, getState));
     }
 }
 
 function updateMovie(movie){
     return (dispatch, getState) => {
         return apiUpdateMovie(updateMovieUrl(), movie)
-            .then(() => dispatch(getMovies()));
+            .then(() => getMovies()(dispatch, getState));
     }
 }
 

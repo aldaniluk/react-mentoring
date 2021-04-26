@@ -7,10 +7,12 @@ import * as apiMap from '@store/apiMap';
 import { Movie } from '@models';
 
 describe('movies actions', () => {
-    let store;
+    let dispatchedObject;
     beforeEach(() => {
-        store = configureStore([thunk])(initialState);
+        dispatchedObject = null;
     })
+    let dispatch = (obj) => { dispatchedObject=obj };
+    let getState = () => initialState;
 
     apiMap.getMoviesUrl =  jest.fn(() => 'url');
     apiMap.deleteMovieUrl =  jest.fn(id => 'delete_url/' + id);
@@ -28,8 +30,8 @@ describe('movies actions', () => {
     };
 
     it('get movies', () => {
-        store.dispatch(getMovies()).then(() => {
-            expect(store.getActions()).toEqual([ expectedAction ]);
+        getMovies()(dispatch, getState).then(() => {
+            expect(dispatchedObject).toEqual(expectedAction);
         })
     })
 
@@ -37,8 +39,8 @@ describe('movies actions', () => {
         let deleteMovieId = 11;
         fetchMock.delete('delete_url/' + deleteMovieId, {})
 
-        store.dispatch(deleteMovie(deleteMovieId)).then(() => {
-            expect(store.getActions()).toEqual([ expectedAction ]);
+        deleteMovie(deleteMovieId)(dispatch, getState).then(() => {
+            expect(dispatchedObject).toEqual(expectedAction);
         })
     })
 
@@ -49,8 +51,8 @@ describe('movies actions', () => {
             body: JSON.stringify(movie) 
         })
 
-        store.dispatch(addMovie(movie)).then(() => {
-            expect(store.getActions()).toEqual([ expectedAction ]);
+        addMovie(movie)(dispatch, getState).then(() => {
+            expect(dispatchedObject).toEqual(expectedAction);
         })
     })
 
@@ -61,8 +63,8 @@ describe('movies actions', () => {
             body: JSON.stringify(movie) 
         })
 
-        store.dispatch(updateMovie(movie)).then(() => {
-            expect(store.getActions()).toEqual([ expectedAction ]);
+        updateMovie(movie)(dispatch, getState).then(() => {
+            expect(dispatchedObject).toEqual(expectedAction);
         })
     })
 });
