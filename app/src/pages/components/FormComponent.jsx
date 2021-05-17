@@ -24,9 +24,7 @@ const Form = styled.form`
 function FormComponent(props) {
     const submitHandler = event => {
         event.preventDefault();
-        if(props.onSubmit){
-            props.onSubmit(event);
-        }
+        props.onSubmit && props.onSubmit(event);
     }
 
     return (

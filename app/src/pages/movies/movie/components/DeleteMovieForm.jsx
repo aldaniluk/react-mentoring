@@ -28,12 +28,12 @@ function DeleteMovieForm(props) {
     }
 
     return (
-        <FormComponent>
+        <FormComponent onSubmit={confirmDelete}>
             <TitleText>DELETE MOVIE</TitleText>
             <Text>Are you sure you want to delete this movie?</Text>
             <ButtonContainer>
                 <TransparentButton onClick={props.close}>RESET</TransparentButton>
-                <ColoredButton onClick={confirmDelete}>Confirm</ColoredButton>
+                <ColoredButton>Confirm</ColoredButton>
             </ButtonContainer>
         </FormComponent>
     )
