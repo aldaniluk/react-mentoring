@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { FormComponent, ColoredButton, TransparentButton } from '@globalComponents'
+import { deleteMovie } from '@store/actionCreators';
+import { connect } from 'react-redux';
 
 const TitleText = styled.div`
     color: white;
@@ -21,8 +23,12 @@ const ButtonContainer = styled.div`
 `
 
 function DeleteMovieForm(props) {    
+    function confirmDelete(){
+        props.dispatch(deleteMovie(props.id));
+    }
+
     return (
-        <FormComponent>
+        <FormComponent onSubmit={confirmDelete}>
             <TitleText>DELETE MOVIE</TitleText>
             <Text>Are you sure you want to delete this movie?</Text>
             <ButtonContainer>
@@ -34,7 +40,8 @@ function DeleteMovieForm(props) {
 }
 
 DeleteMovieForm.propTypes = {
+    id: PropTypes.number.isRequired,
     close: PropTypes.func.isRequired,
 }
 
-export { DeleteMovieForm }
+export default connect()(DeleteMovieForm)

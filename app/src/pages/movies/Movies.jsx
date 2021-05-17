@@ -6,53 +6,27 @@ import { FilterSorterTopPanelComponent } from '@pages/movies/components/layouts/
 import { MoviesListComponent } from '@pages/movies/components/layouts/MoviesListComponent';
 import { MoviesCounter } from '@pages/movies/components/MoviesCounter';
 import { GlobalWidthComponent } from '@globalComponents';
-import moviesFromJson from '@assets/data/movies';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { getMovies } from '@store/actionCreators';
+import { useSelector, connect } from 'react-redux';
+import { moviesSelector, selectedFilterSelector, selectedSorterSelector, selectedSorterAscSelector } from '@store/selectors';
 
 function Movies(props) {
-    const [movies, setMovies] = useState([]);
-    const [selectedFilterOption, setSelectedFilterOption] = useState(null);
-    const [selectedSorterOption, setSelectedSorterOption] = useState(null);
+    const movies = useSelector(moviesSelector);
+    const selectedFilterOption = useSelector(selectedFilterSelector);
+    const selectedSorterOption = useSelector(selectedSorterSelector);
+    const selectedSorterAsc = useSelector(selectedSorterAscSelector);
 
     useEffect(() => {
-        Promise
-            .resolve(moviesFromJson)
-            .then(movies => {
-                var allMovies = [...movies]; //creates new array! hack for correct setMovies hook work
-                var filteredMovies = filterMovies(allMovies);
-                var sortedMovies = sortMovies(filteredMovies);
-                setMovies(sortedMovies);
-            })
-    }, [selectedFilterOption, selectedSorterOption])
-
-    function filterMovies(allMovies){
-        if(selectedFilterOption && selectedFilterOption.name.toLowerCase() !== 'all'){
-            return allMovies.filter(m => m.genre.toLowerCase() === selectedFilterOption.name.toLowerCase());
-        }
-
-        return allMovies;
-    }
-
-    function sortMovies(filteredMovies){
-        if(selectedSorterOption){
-            var field = selectedSorterOption.field;
-            
-            return filteredMovies.sort((a, b) => {
-                if(a[field] < b[field]) return -1;
-                if(a[field] > b[field]) return 1;
-                return 0;
-            });
-        }
-
-        return filteredMovies;
-    }
+        props.dispatch(getMovies());
+    }, [selectedFilterOption, selectedSorterOption, selectedSorterAsc])
 
     return (
         <MoviesComponent>
             <GlobalWidthComponent>
                 <FilterSorterTopPanelComponent>
-                    <Filter changeSelectedOption={setSelectedFilterOption} />
-                    <Sorter changeSelectedOption={setSelectedSorterOption} />
+                    <Filter />
+                    <Sorter />
                 </FilterSorterTopPanelComponent>
                 <MoviesCounter count={movies.length} />
                 <MoviesListComponent>
@@ -71,4 +45,4 @@ function Movies(props) {
     )
 }
 
-export { Movies }
+export default connect()(Movies)

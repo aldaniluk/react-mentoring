@@ -1,36 +1,28 @@
 import { SorterListComponent } from '@pages/movies/sorter/components/layouts/SorterListComponent';
 import { SortByText } from '@pages/movies/sorter/components/SortByText';
 import { SorterDropdown } from './components/SorterDropdown'
-import optionsFromJson from '@assets/data/sortBy.json'
-import { useState, useEffect } from 'react';
+import { useSelector, connect } from 'react-redux';
+import { setSorterOption } from '@store/actionCreators';
+import SorterOptions from '@assets/data/SorterOptions';
+import { selectedSorterSelector, selectedSorterAscSelector } from '@store/selectors';
 
 function Sorter(props) {
-    const [options, setOptions] = useState([]);
-    const [selectedOption, setSelectedOption] = useState(null);
+    const selectedOption = useSelector(selectedSorterSelector);
+    const asc = useSelector(selectedSorterAscSelector);
 
-    useEffect(() => {
-        Promise
-            .resolve(optionsFromJson)
-            .then(options => {
-                setOptions(options);
-                setSelectedOption(options[0]);
-            });
-    }, []);
-
-    useEffect(() => {
-        props.changeSelectedOption(selectedOption);
-    }, [selectedOption]);
-
-    function changeSelected(event){
-        setSelectedOption(options.find(o => o.id == event.target.value));
+    function setSelectedOption(event){
+        if(event.clientX == 0 && event.clientY == 0) { //HACK: click is raised twice, when you select option from dropdown. The second click has specified condition 
+            let ascNew = selectedOption.id == event.target.value ? !asc : true;
+            props.dispatch(setSorterOption(SorterOptions.find(o => o.id == event.target.value), ascNew));
+        }
     }
 
     return (
         <SorterListComponent>
             <SortByText /> 
-            <SorterDropdown selectedOption={selectedOption} changeSelected={changeSelected} >
+            <SorterDropdown selectedOption={selectedOption} changeSelected={setSelectedOption} >
                 {
-                    options.map(option => (
+                    SorterOptions.map(option => (
                             <option key={option.id} value={option.id}>
                                 {option.name}
                             </option>   
@@ -42,4 +34,4 @@ function Sorter(props) {
     );
 }
 
-export { Sorter }
+export default connect()(Sorter)

@@ -1,4 +1,4 @@
-[
+const FilterOptions = [
     {
         "id": 1,
         "name": "ALL"
@@ -24,3 +24,5 @@
         "name": "CRIME"
     }
 ]
+
+export default FilterOptions

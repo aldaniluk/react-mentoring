@@ -6,7 +6,7 @@ const Img = styled.img`
 `
 
 function MovieDetailsImg(props){
-    return <Img src={'imgs/'+props.imgSrc} />;
+    return <Img src={props.poster_path} />;
 }
 
 export { MovieDetailsImg }

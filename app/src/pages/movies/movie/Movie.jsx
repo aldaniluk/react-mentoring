@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useState, useCallback } from 'react';
-import { EditMovieForm } from '@pages/movies/movie/components/EditMovieForm';
-import { DeleteMovieForm } from '@pages/movies/movie/components/DeleteMovieForm';
+import EditMovieForm from '@pages/movies/movie/components/EditMovieForm';
+import DeleteMovieForm from '@pages/movies/movie/components/DeleteMovieForm';
 import { MovieDescription } from '@pages/movies/movie/components/MovieDescription';
 import { MovieComponent } from '@pages/movies/movie/components/layouts/MovieComponent';
 import { EditDeleteOptions } from '@pages/movies/movie/components/EditDeleteOptions';
@@ -21,21 +21,21 @@ function Movie(props) {
     return (
         <>
             {editMovieFormOpened && (<EditMovieForm close={handleEditMovieForm} movie={props.movie}/>)}
-            {deleteMovieFormOpened &&  (<DeleteMovieForm close={handleDeleteMovieForm} />)}
+            {deleteMovieFormOpened &&  (<DeleteMovieForm id={props.movie.id} close={handleDeleteMovieForm} />)}
             <MovieComponent 
                 onMouseOver={showEditDelete} 
                 onMouseLeave={hideEditDelete}
                 onClick={showMovieDetails}
             >
-                <img src={'imgs/'+props.movie.imgSrc} />
+                <img src={props.movie.poster_path} />
                 {editDeleteShown && (<EditDeleteOptions 
                     openEditMovie={handleEditMovieForm}
                     openDeleteMovie={handleDeleteMovieForm}
                 />)}
                 <MovieDescription 
-                    name={props.movie.name} 
-                    age={props.movie.age} 
-                    genre={props.movie.genre} 
+                    title={props.movie.title} 
+                    release_date={props.movie.release_date} 
+                    genres={props.movie.genres} 
                 />
             </MovieComponent>
         </>
@@ -45,12 +45,10 @@ function Movie(props) {
 Movie.propTypes = {
     movie: PropTypes.shape({
         id: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired,
-        age: PropTypes.number.isRequired,
-        genre: PropTypes.string.isRequired,
-        imgSrc: PropTypes.string.isRequired,
-        overview: PropTypes.string.isRequired,
-        runtime: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        release_date: PropTypes.string.isRequired,
+        genres: PropTypes.array.isRequired,
+        poster_path: PropTypes.string.isRequired,
     }).isRequired
 }
 

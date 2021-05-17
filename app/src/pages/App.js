@@ -1,18 +1,18 @@
 import { Header } from './header';
 import { Movies } from './movies';
 import { Footer } from './footer';
-import { ErrorBoundary } from '@globalComponents';
 import { useState } from 'react';
+import { AppContainer } from './components/AppContainer';
 
 function App() {
     const [movieId, setMovieId] = useState(null);
 
     return (
-        <ErrorBoundary>
+        <AppContainer>
             <Header showSearchPanel={setMovieId} movieId={movieId} />
             <Movies showMovieDetails={setMovieId} />
             <Footer />
-        </ErrorBoundary>
+        </AppContainer>
     );
 }
 

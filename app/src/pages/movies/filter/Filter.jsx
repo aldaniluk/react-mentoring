@@ -1,34 +1,26 @@
 import { FilterListComponent } from '@pages/movies/filter/components/layouts/FilterListComponent';
 import { FilterOption } from '@pages/movies/filter/components/FilterOption';
-import optionsFromJson from '@assets/data/genres.json'
-import { useState, useEffect } from 'react';
+import { setFilterOption } from '@store/actionCreators';
+import { useSelector, connect } from 'react-redux';
+import FilterOptions from '@assets/data/FilterOptions';
+import { selectedFilterSelector } from '@store/selectors';
 
 function Filter(props) {    
-    const [options, setOptions] = useState([]);
-    const [selectedOption, setSelectedOption] = useState(null);
-    
-    useEffect(() => {
-        Promise
-            .resolve(optionsFromJson)
-            .then(options => {
-                setOptions(options);
-                setSelectedOption(options[0]);
-            });
-    }, []);
+    const selectedOption = useSelector(selectedFilterSelector);
 
-    useEffect(() => {
-        props.changeSelectedOption(selectedOption);
-    }, [selectedOption]);
+    function setSelectedOption(option){
+        props.dispatch(setFilterOption(option));
+    }
 
     return (
         <FilterListComponent>
             {
-                options.map(option => (
+                FilterOptions.map(option => (
                     <FilterOption 
                         key={option.id}
                         option={option}
                         isSelected={option === selectedOption}
-                        changeSelected={setSelectedOption}
+                        changeSelected={() => setSelectedOption(option)}
                     />
                 ))
             }
@@ -36,4 +28,4 @@ function Filter(props) {
     );
 }
 
-export { Filter }
+export default connect()(Filter)

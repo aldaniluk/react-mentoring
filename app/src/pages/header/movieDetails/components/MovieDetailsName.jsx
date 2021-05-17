@@ -19,8 +19,8 @@ const Rating = styled.div`
 function MovieDetailsName(props){
     return (
         <Container>
-            <Name>{props.name}</Name>
-            <Rating>{props.rating}</Rating>
+            <Name>{props.title}</Name>
+            <Rating>{props.vote_average}</Rating>
         </Container>
     )
 }
