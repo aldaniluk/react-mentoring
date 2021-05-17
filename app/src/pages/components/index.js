@@ -10,6 +10,7 @@ import { ColoredButton } from './ColoredButton'
 import { SemitransparentButton } from './SemitransparentButton'
 import { ValidationFormText } from './ValidationFormText'
 import { AppContainer } from './AppContainer'
+import { NavigationMap } from './NavigationMap'
 
 export {
     ErrorBoundary,
@@ -24,4 +25,5 @@ export {
     SemitransparentButton,
     ValidationFormText,
     AppContainer,
+    NavigationMap,
 }

@@ -5,21 +5,26 @@ import { MoviesComponent } from '@pages/movies/components/layouts/MoviesComponen
 import { FilterSorterTopPanelComponent } from '@pages/movies/components/layouts/FilterSorterTopPanelComponent';
 import { MoviesListComponent } from '@pages/movies/components/layouts/MoviesListComponent';
 import { MoviesCounter } from '@pages/movies/components/MoviesCounter';
+import { NoMovieFound } from '@pages/movies/components/NoMovieFound';
 import { GlobalWidthComponent } from '@globalComponents';
 import { useEffect } from 'react';
 import { getMovies } from '@store/actionCreators';
+import { useLocation } from "react-router-dom";
 import { useSelector, connect } from 'react-redux';
 import { moviesSelector, selectedFilterSelector, selectedSorterSelector, selectedSorterAscSelector } from '@store/selectors';
+
+const useQuery = () => new URLSearchParams(useLocation().search);
 
 function Movies(props) {
     const movies = useSelector(moviesSelector);
     const selectedFilterOption = useSelector(selectedFilterSelector);
     const selectedSorterOption = useSelector(selectedSorterSelector);
     const selectedSorterAsc = useSelector(selectedSorterAscSelector);
+    const search = useQuery().get('search');
 
     useEffect(() => {
-        props.dispatch(getMovies());
-    }, [selectedFilterOption, selectedSorterOption, selectedSorterAsc])
+        props.dispatch(getMovies(search));
+    }, [selectedFilterOption, selectedSorterOption, selectedSorterAsc, search])
 
     return (
         <MoviesComponent>
@@ -28,18 +33,18 @@ function Movies(props) {
                     <Filter />
                     <Sorter />
                 </FilterSorterTopPanelComponent>
-                <MoviesCounter count={movies.length} />
-                <MoviesListComponent>
                 {
-                    movies.map(movie => {
-                        return (<Movie 
-                            key={movie.id}
-                            movie={movie}
-                            showMovieDetails={props.showMovieDetails}
-                        />
-                    )})
+                movies.length === 0 
+                    ? <NoMovieFound />
+                    : <>
+                        <MoviesCounter count={movies.length} />
+                        <MoviesListComponent>
+                        {
+                            movies.map(movie => <Movie key={movie.id} movie={movie} />)
+                        }
+                        </MoviesListComponent>
+                    </>
                 }
-                </MoviesListComponent>
             </GlobalWidthComponent>
         </MoviesComponent>
     )

@@ -19,6 +19,17 @@ function moviesReducer(state = initialState.movies, action){
     }
 }
 
+function movieReducer(state = initialState.movies, action){
+    switch(action.type){
+        case actionType.GET_MOVIE:
+            return state;
+        case actionType.SET_MOVIE:
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
 function filterReducer(state = initialState.filter, action){
     switch(action.type){
         case actionType.SET_FILTER:
@@ -46,6 +57,7 @@ function sorterReducer(state = initialState.sorter, action){
 
 const rootReducer = combineReducers({
     'movies': moviesReducer,
+    'movie': movieReducer,
     'filter': filterReducer,
     'sorter': sorterReducer,
 });

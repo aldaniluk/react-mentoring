@@ -1,18 +1,18 @@
 import { actionType } from './actionType';
 import { selectedFilterSelector, selectedSorterSelector, selectedSorterAscSelector } from '@store/selectors';
-import { getMoviesUrl, deleteMovieUrl, addMovieUrl, updateMovieUrl } from '@store/apiMap';
-import { apiGetMovies, apiDeleteMovie, apiAddMovie, apiUpdateMovie } from '@store/apiRequest/';
+import { getMoviesUrl, getMovieUrl, deleteMovieUrl, addMovieUrl, updateMovieUrl } from '@store/apiMap';
+import { apiGet, apiDelete, apiAdd, apiUpdate } from '@store/apiRequest/';
 
-function getMovies() {
+function getMovies(search) {
     return (dispatch, getState) => {
         let state = getState();
         let filter = selectedFilterSelector(state).name;
         let sorter = selectedSorterSelector(state).field;
         let asc = selectedSorterAscSelector(state);
 
-        let url = getMoviesUrl(filter, sorter, asc);
+        let url = getMoviesUrl(filter, sorter, asc, search);
 
-        apiGetMovies(url)
+        apiGet(url)
             .then(res => dispatch({
                 type: actionType.SET_MOVIES,
                 payload: res.data
@@ -20,23 +20,35 @@ function getMovies() {
     }
 }
 
+function getMovie(id){
+    return (dispatch, getState) => {
+        let url = getMovieUrl(id);
+
+        apiGet(url)
+            .then(res => dispatch({
+                type: actionType.SET_MOVIE,
+                payload: res
+            }))
+    }
+}
+
 function deleteMovie(id){
     return (dispatch, getState) => {
-        apiDeleteMovie(deleteMovieUrl(id))
+        apiDelete(deleteMovieUrl(id))
             .then(() => dispatch(getMovies()));
     }
 }
 
 function addMovie(movie){
     return (dispatch, getState) => {
-        apiAddMovie(addMovieUrl(), movie)
+        apiAdd(addMovieUrl(), movie)
             .then(() => dispatch(getMovies()));
     }
 }
 
 function updateMovie(movie){
     return (dispatch, getState) => {
-        apiUpdateMovie(updateMovieUrl(), movie)
+        apiUpdate(updateMovieUrl(), movie)
             .then(() => dispatch(getMovies()));
     }
 }
@@ -55,4 +67,4 @@ function setSorterOption(option, asc){
     }
 }
 
-export { getMovies, deleteMovie, addMovie, updateMovie, setFilterOption, setSorterOption }
+export { getMovies, getMovie, deleteMovie, addMovie, updateMovie, setFilterOption, setSorterOption }

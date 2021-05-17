@@ -1,5 +1,6 @@
-import { Header } from './Header'
+import { Header } from './Header';
+import { MovieHeader } from './MovieHeader';
 
 export {
-    Header
+    Header, MovieHeader
 }

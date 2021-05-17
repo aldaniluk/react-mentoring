@@ -5,6 +5,7 @@ import DeleteMovieForm from '@pages/movies/movie/components/DeleteMovieForm';
 import { MovieDescription } from '@pages/movies/movie/components/MovieDescription';
 import { MovieComponent } from '@pages/movies/movie/components/layouts/MovieComponent';
 import { EditDeleteOptions } from '@pages/movies/movie/components/EditDeleteOptions';
+import { NavLink } from 'react-router-dom';
 
 function Movie(props) {
     const [editDeleteShown, setEditDeleteShown] = useState(false);
@@ -16,28 +17,27 @@ function Movie(props) {
     const showEditDelete = useCallback(() => setEditDeleteShown(true), []);
     const hideEditDelete = useCallback(() => setEditDeleteShown(false), []);
 
-    const showMovieDetails = useCallback(() => props.showMovieDetails(props.movie.id), [props.showMovieDetails, props.movie.id]);
-
     return (
         <>
             {editMovieFormOpened && (<EditMovieForm close={handleEditMovieForm} movie={props.movie}/>)}
             {deleteMovieFormOpened &&  (<DeleteMovieForm id={props.movie.id} close={handleDeleteMovieForm} />)}
-            <MovieComponent 
-                onMouseOver={showEditDelete} 
-                onMouseLeave={hideEditDelete}
-                onClick={showMovieDetails}
-            >
-                <img src={props.movie.poster_path} />
-                {editDeleteShown && (<EditDeleteOptions 
-                    openEditMovie={handleEditMovieForm}
-                    openDeleteMovie={handleDeleteMovieForm}
-                />)}
-                <MovieDescription 
-                    title={props.movie.title} 
-                    release_date={props.movie.release_date} 
-                    genres={props.movie.genres} 
-                />
-            </MovieComponent>
+            <NavLink to={`/film/${props.movie.id}`} style={{ textDecoration: 'none' }}>
+                <MovieComponent 
+                    onMouseOver={showEditDelete} 
+                    onMouseLeave={hideEditDelete}
+                >
+                    <img src={props.movie.poster_path} />
+                    {editDeleteShown && (<EditDeleteOptions 
+                        openEditMovie={handleEditMovieForm}
+                        openDeleteMovie={handleDeleteMovieForm}
+                    />)}
+                    <MovieDescription 
+                        title={props.movie.title} 
+                        release_date={props.movie.release_date} 
+                        genres={props.movie.genres} 
+                    />
+                </MovieComponent>
+            </NavLink>
         </>
     );
 }

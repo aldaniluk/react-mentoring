@@ -6,23 +6,23 @@ import { MovieDetailsName } from '@pages/header/movieDetails/components/MovieDet
 import { MovieDetailsText } from '@pages/header/movieDetails/components/MovieDetailsText';
 import { MovieDetailsAccentText } from '@pages/header/movieDetails/components/MovieDetailsAccentText';
 import { AgeTimeContainer } from '@pages/header/movieDetails/components/layouts/AgeTimeContainer';
-import { useSelector } from 'react-redux';
-import { moviesSelector } from '@store/selectors';
+import { useSelector, connect } from 'react-redux';
+import { movieSelector } from '@store/selectors';
+import { getMovie } from '@store/actionCreators';
 
 function MovieDetails(props) {
-    const movies = useSelector(moviesSelector);
-    const [movie, setMovie] = useState({});
+    let movie = useSelector(movieSelector);
+    let id = parseInt(props.id);
 
     useEffect(() => {
-        setMovie(movies.find(m => m.id === props.id));
-    }, [props.id])
+        props.getMovie(id);
+    }, [id])
 
     return (
         <MovieDetailsComponent>
             <MovieDetailsImg poster_path={movie.poster_path} />
             <div>
                 <MovieDetailsName title={movie.title} vote_average={movie.vote_average} />
-                {/* {movie.isOscarWinning && <MovieDetailsText>Oscar winning Movie</MovieDetailsText>} */}
                 <AgeTimeContainer>
                     <MovieDetailsAccentText>{movie.release_date}</MovieDetailsAccentText>
                     <MovieDetailsAccentText>{movie.runtime} min</MovieDetailsAccentText>
@@ -34,7 +34,7 @@ function MovieDetails(props) {
 }
 
 MovieDetails.propTypes = {
-    id: PropTypes.number.isRequired
+    id: PropTypes.string.isRequired
 }
 
-export { MovieDetails }
+export default connect(null, { getMovie })(MovieDetails)

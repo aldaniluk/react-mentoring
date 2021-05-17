@@ -25,7 +25,8 @@ const cssLoaders = extra => {
 module.exports = {
     entry: './src/index.js',
     output: {
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist'),
+        publicPath: '/',
     },
     resolve: {
         modules: ['node_modules'],
@@ -46,6 +47,9 @@ module.exports = {
         splitChunks: {
             chunks: 'all'
         }
+    },
+    devServer: {
+        historyApiFallback: true,
     },
     plugins: [
         new HTMLWebpackPlugin({

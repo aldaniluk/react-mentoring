@@ -3,6 +3,7 @@ import SorterOptions from '@assets/data/SorterOptions';
 
 const initialState = {
     movies: [],
+    movie: null,
     filter: {
         selectedOption: FilterOptions[0]
     },
