@@ -1,11 +1,9 @@
 import styled from 'styled-components';
 import { FormComponent, FormOptionName, FormOptionInput, ColoredButton, TransparentButton, ValidationFormText } from '@globalComponents'
-import { addMovie } from '@store/actionCreators';
 import React from 'react';
 import { useFormik } from 'formik';
 import { formValidator } from '@services/formValidator';
 import { Movie } from '@models';
-import { connect } from 'react-redux';
 import FilterOptions from '@assets/data/FilterOptions';
 
 const Title = styled.div`
@@ -38,7 +36,7 @@ function AddMovieForm(props) {
         onSubmit: values => {
             let movie = new Movie(values.title, values.release_date, values.poster_path, values.genres.split(','), values.overview, Number.parseInt(values.runtime));
 
-            props.dispatch(addMovie(movie));
+            props.addMovie(movie);
             props.close();
         }
     });
@@ -50,6 +48,7 @@ function AddMovieForm(props) {
             <FormOptionInput 
                 id='title'
                 name='title'
+                title='title'
                 placeholder='Title here' 
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -60,6 +59,7 @@ function AddMovieForm(props) {
             <FormOptionInput 
                 id='release_date'
                 name='release_date'
+                title='release_date'
                 placeholder='Release date here' 
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -70,6 +70,7 @@ function AddMovieForm(props) {
             <FormOptionInput 
                 id='poster_path'
                 name='poster_path'
+                title='poster_path'
                 placeholder='Url here' 
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -80,6 +81,7 @@ function AddMovieForm(props) {
             <FormOptionInput 
                 id='genres'
                 name='genres'
+                title='genres'
                 placeholder='Genres here' 
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -90,6 +92,7 @@ function AddMovieForm(props) {
             <FormOptionInput 
                 id='overview'
                 name='overview'
+                title='overview'
                 placeholder='Overview here' 
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -100,6 +103,7 @@ function AddMovieForm(props) {
             <FormOptionInput 
                 id='runtime'
                 name='runtime'
+                title='runtime'
                 placeholder='Runtime here' 
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -114,4 +118,4 @@ function AddMovieForm(props) {
     )
 }
 
-export default connect()(AddMovieForm)
+export { AddMovieForm }

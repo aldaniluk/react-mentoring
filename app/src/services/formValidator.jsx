@@ -40,7 +40,7 @@ function validateUrl(poster_path, errors){
 
 function validateGenres(genres, correctGenres, errors){
     if(!genres) {
-        errors.genres = 'Genres is required';
+        errors.genres = 'Genres are required';
     }
     else if(!genres.split(',').map(g => g.toUpperCase()).every(g => correctGenres.some(gg => gg.name == g))) {
         errors.genres = 'Some of genres are incorrect';
@@ -61,6 +61,6 @@ function validateRuntime(runtime, errors){
         errors.runtime = 'Runtime must be an integer';
     }
     else if(Number.parseInt(runtime) === 0) {
-        errors.runtime = 'Runtime must be greated that 0';
+        errors.runtime = 'Runtime must be greater that 0';
     }
 }

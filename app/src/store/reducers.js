@@ -62,4 +62,4 @@ const rootReducer = combineReducers({
     'sorter': sorterReducer,
 });
 
-export { rootReducer }
+export { rootReducer, moviesReducer }
