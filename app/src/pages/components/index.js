@@ -8,6 +8,7 @@ import { FormOptionDropdown } from './FormOptionDropdown'
 import { TransparentButton } from './TransparentButton'
 import { ColoredButton } from './ColoredButton'
 import { SemitransparentButton } from './SemitransparentButton'
+import { ValidationFormText } from './ValidationFormText'
 import { AppContainer } from './AppContainer'
 
 export {
@@ -21,5 +22,6 @@ export {
     TransparentButton,
     ColoredButton,
     SemitransparentButton,
+    ValidationFormText,
     AppContainer,
 }

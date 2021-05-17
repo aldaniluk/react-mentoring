@@ -1,10 +1,12 @@
 import styled from 'styled-components';
-import { FormComponent, FormOptionName, FormOptionInput, ColoredButton, TransparentButton } from '@globalComponents'
-import { useState, useCallback } from 'react'
+import { FormComponent, FormOptionName, FormOptionInput, ColoredButton, TransparentButton, ValidationFormText } from '@globalComponents'
 import { addMovie } from '@store/actionCreators';
 import React from 'react';
+import { useFormik } from 'formik';
+import { formValidator } from '@services/formValidator';
 import { Movie } from '@models';
 import { connect } from 'react-redux';
+import FilterOptions from '@assets/data/FilterOptions';
 
 const Title = styled.div`
     color: white;
@@ -21,44 +23,92 @@ const ColoredButtonWrapper = styled(ColoredButton)`
 `
 
 function AddMovieForm(props) {
-    const [title, setTitle] = useState('');
-    const [release_date, setReleaseDate] = useState('');
-    const [poster_path, setUrl] = useState('');
-    const [genres, setGenres] = useState('');
-    const [overview, setOverview] = useState('');
-    const [runtime, setRuntime] = useState(0);
+    const validate = values => formValidator(values, FilterOptions);
 
-    const handleAddTitle = useCallback(event => setTitle(event.target.value), []);
-    const handleAddReleaseDate = useCallback(event => setReleaseDate(event.target.value), []);
-    const handleAddUrl = useCallback(event => setUrl(event.target.value), []);
-    const handleAddGenres = useCallback(event => setGenres(event.target.value), []);
-    const handleAddOverview = useCallback(event => setOverview(event.target.value), []);
-    const handleAddRuntime = useCallback(event => setRuntime(event.target.value), []);
+    const formik = useFormik({
+        initialValues: {
+            title: '',
+            release_date: '',
+            poster_path: '',
+            genres: '',
+            overview: '',
+            runtime: ''
+        },
+        validate,
+        onSubmit: values => {
+            let movie = new Movie(values.title, values.release_date, values.poster_path, values.genres.split(','), values.overview, Number.parseInt(values.runtime));
 
-    function confirmAdd(){
-        let movie = new Movie(title, release_date, poster_path, genres.split(','), overview, Number.parseInt(runtime));
-        props.dispatch(addMovie(movie));
-        props.close();
-    }
+            props.dispatch(addMovie(movie));
+            props.close();
+        }
+    });
 
     return (
-        <FormComponent onSubmit={confirmAdd}>
+        <FormComponent onSubmit={formik.handleSubmit}>
             <Title>ADD MOVIE</Title>
             <FormOptionName>TITLE</FormOptionName>
-            <FormOptionInput placeholder='Title here' onChange={handleAddTitle} />
+            <FormOptionInput 
+                id='title'
+                name='title'
+                placeholder='Title here' 
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.title} 
+            />
+            {formik.touched.title && formik.errors.title ? <ValidationFormText>{formik.errors.title}</ValidationFormText> : null}
             <FormOptionName>RELEASE DATE</FormOptionName>
-            <FormOptionInput placeholder='Release date here' onChange={handleAddReleaseDate} />
+            <FormOptionInput 
+                id='release_date'
+                name='release_date'
+                placeholder='Release date here' 
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.release_date} 
+            />
+            {formik.touched.release_date && formik.errors.release_date ? <ValidationFormText>{formik.errors.release_date}</ValidationFormText> : null}
             <FormOptionName>MOVIE URL</FormOptionName>
-            <FormOptionInput placeholder='Movie URL here' onChange={handleAddUrl} />
+            <FormOptionInput 
+                id='poster_path'
+                name='poster_path'
+                placeholder='Url here' 
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.poster_path} 
+            />
+            {formik.touched.poster_path && formik.errors.poster_path ? <ValidationFormText>{formik.errors.poster_path}</ValidationFormText> : null}
             <FormOptionName>GENRES</FormOptionName>
-            <FormOptionInput placeholder='Genres here' onChange={handleAddGenres} />
+            <FormOptionInput 
+                id='genres'
+                name='genres'
+                placeholder='Genres here' 
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.genres} 
+            />
+            {formik.touched.genres && formik.errors.genres ? <ValidationFormText>{formik.errors.genres}</ValidationFormText> : null}
             <FormOptionName>OVERVIEW</FormOptionName>
-            <FormOptionInput placeholder='Overview here' onChange={handleAddOverview} />
+            <FormOptionInput 
+                id='overview'
+                name='overview'
+                placeholder='Overview here' 
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.overview} 
+            />
+            {formik.touched.overview && formik.errors.overview ? <ValidationFormText>{formik.errors.overview}</ValidationFormText> : null}
             <FormOptionName>RUNTIME</FormOptionName>
-            <FormOptionInput placeholder='Runtime here' onChange={handleAddRuntime} />
+            <FormOptionInput 
+                id='runtime'
+                name='runtime'
+                placeholder='Runtime here' 
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.runtime} 
+            />
+            {formik.touched.runtime && formik.errors.runtime ? <ValidationFormText>{formik.errors.runtime}</ValidationFormText> : null}
             <ButtonContainer>
                 <TransparentButton onClick={props.close}>RESET</TransparentButton>
-                <ColoredButtonWrapper>SUBMIT</ColoredButtonWrapper>
+                <ColoredButtonWrapper type='submit'>SUBMIT</ColoredButtonWrapper>
             </ButtonContainer>
         </FormComponent>
     )
