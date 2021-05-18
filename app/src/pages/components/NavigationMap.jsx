@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function NavigationMap() {
     return (
-        <Router>
+        <>
             <Switch>
                 <Route path='/film/:movieId'>
                     <MovieHeader />
@@ -25,7 +25,7 @@ function NavigationMap() {
                 </Route>
             </Switch>
             <Footer />
-        </Router>
+        </>
     )
 }
 

@@ -5,6 +5,7 @@ module.exports = {
     mode: 'production',
     output: {
         filename: '[name].[contenthash].js',
+        libraryTarget: 'commonjs2'
     },
     optimization: {
         minimizer: [
